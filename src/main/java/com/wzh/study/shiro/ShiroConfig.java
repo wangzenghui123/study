@@ -71,14 +71,12 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/api/user/login","anon");
         filterChainDefinitionMap.put("/api/user/userLogin","anon");
         filterChainDefinitionMap.put("/api/index","anon");
+        filterChainDefinitionMap.put("/api/index/404","anon");
+        filterChainDefinitionMap.put("/api/mockdata","anon");
+
 
         filterChainDefinitionMap.put("/**", "customFilter,authc"); // 使用自定义过滤器
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-
-
-
-
-
         return shiroFilterFactoryBean;
     }
 

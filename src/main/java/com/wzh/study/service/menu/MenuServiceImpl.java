@@ -16,10 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
-@Transactional
 public class MenuServiceImpl implements MenuService {
 
 
@@ -64,12 +65,13 @@ public class MenuServiceImpl implements MenuService {
                 child.setOrderNum(permission.getOrderNum());
                 child.setId(permission.getId());
                 child.setChildren(getChildren(permission.getId(),permissions));
-
                 menuResoVOList.add(child);
 
             }
         }
-        System.out.println(menuResoVO.toString());
+        Collections.sort(menuResoVOList, Comparator.comparingInt(MenuResoVO::getOrderNum));
+        menuResoVO.setChildren((ArrayList<MenuResoVO>) menuResoVOList);
+        System.out.println(menuResoVO);
         return menuResoVO;
     }
 
@@ -90,6 +92,7 @@ public class MenuServiceImpl implements MenuService {
                 menuResoVOArrayList.add(child);
             }
         }
+        Collections.sort(menuResoVOArrayList, Comparator.comparingInt(MenuResoVO::getOrderNum));
         return menuResoVOArrayList;
     }
 }

@@ -11,7 +11,14 @@ public class IndexController {
 
     @RequestMapping("/index")
     public String index(){
-        return "/user/index";
+        System.out.println("api/index");
+        return "/index";
+    }
+
+    @RequestMapping("/index/404")
+    public String index404(){
+        System.out.println("api/index/404");
+        return "/404";
     }
 
 

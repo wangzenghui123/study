@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.util.StringUtils;
 
 @Controller
@@ -27,10 +28,10 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
-    @RequiresPermissions("per")
-    @GetMapping(name="/menu",produces ={MediaType.APPLICATION_JSON_VALUE} )
+
+    @GetMapping("/menu")
+    @ResponseBody
     public DataResult<MenuResoVO> getMenu(){
-        System.out.println(1111);
         DataResult<MenuResoVO> dataResult = new DataResult<>(ResponseCode.SUCCESS);
         MenuResoVO menuResoVO = menuService.getMenu();
         dataResult.setData(menuResoVO);

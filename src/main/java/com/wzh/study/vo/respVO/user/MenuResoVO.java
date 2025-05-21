@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MenuResoVO {
+public class MenuResoVO implements Comparable<MenuResoVO>{
 
     private String id;
 
@@ -30,4 +30,8 @@ public class MenuResoVO {
 
     private ArrayList<MenuResoVO> children;
 
+    @Override
+    public int compareTo(MenuResoVO o) {
+        return Integer.compare(this.orderNum,o.orderNum);
+    }
 }

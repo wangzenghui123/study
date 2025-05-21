@@ -33,14 +33,13 @@ public class CustomRealm extends AuthorizingRealm {
         set.add("per");
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setStringPermissions(set);
-        return new SimpleAuthorizationInfo();
+        return info;
     }
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         CustomUsernamePasswordToken token = (CustomUsernamePasswordToken) authenticationToken;
         SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(token.getPrincipal(),token.getCredentials(),CustomRealm.class.getName());
-
         return simpleAuthenticationInfo;
     }
 }

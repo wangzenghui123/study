@@ -27,6 +27,11 @@ public class UserController {
         return "user/login";
     }
 
+    @GetMapping("/user/user")
+    public String user(){
+        return "user";
+    }
+
     @PostMapping(value = "/user/userLogin",produces ={MediaType.APPLICATION_JSON_VALUE} )
     @ResponseBody
     public DataResult<UserLoginRespVO> userLogin(@RequestBody UserLoginReqVO userLoginReqVO){
