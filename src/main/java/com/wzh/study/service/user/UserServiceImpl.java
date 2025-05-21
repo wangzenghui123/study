@@ -11,9 +11,12 @@ import com.wzh.study.vo.reqVO.user.UserLoginReqVO;
 import com.wzh.study.vo.respVO.user.UserLoginRespVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.HashMap;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
 

@@ -19,21 +19,27 @@ public class CustomFilter extends AccessControlFilter {
     //访问资源之前确定是否允许访问。如果返回true，则允许访问，继续进行；如果放回false，则会调用onAccessDenied方法
     @Override
     protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o) throws Exception {
-
-        System.out.println("11111111111111111111111111111111111111111111111111111111111111111111111111111113");
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        System.out.println(httpServletRequest.getRequestURI().toString());
-        String accessToken = httpServletRequest.getHeader("access_token");
-        String refreshToken = httpServletRequest.getHeader("refresh_token");
+
+//        String token="";
+//        if (!httpServletRequest.getMethod().equals("OPTIONS")) {
+//             token = httpServletRequest.getHeader("AccessToken");
+//            if (StringUtils.isEmpty(token)) {
+//                token = httpServletRequest.getParameter("AccessToken");
+//            }
+//        }
+
+        String accessToken = httpServletRequest.getHeader("AccessToken");
+        String refreshToken = httpServletRequest.getHeader("RefreshToken");
         if(StringUtils.isEmpty(accessToken) || StringUtils.isEmpty(refreshToken)) return false;
-        getSubject(servletRequest,servletResponse).login(new CustomUsernamePasswordToken(accessToken,refreshToken));
+        CustomUsernamePasswordToken customUsernamePasswordToken = new CustomUsernamePasswordToken(accessToken,refreshToken);
+        getSubject(servletRequest,servletResponse).login(customUsernamePasswordToken);
         return true;
     }
 
     //当isAccessAllowed方法返回false时，此方法被调用。在这里可以实现访问被拒绝时的处理
     @Override
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
-        System.out.println("22222222222222222");
         servletResponse.setContentType("application/json");
         servletResponse.setCharacterEncoding("UTF-8");
         PrintWriter writer = servletResponse.getWriter();

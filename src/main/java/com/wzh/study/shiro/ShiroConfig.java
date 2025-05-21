@@ -22,12 +22,20 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
+    @Bean("customHashedCredentialsMatcher")
+    public CustomHashedCredentialsMatcher customHashedCredentialsMatcher(){
+        CustomHashedCredentialsMatcher customHashedCredentialsMatcher = new CustomHashedCredentialsMatcher();
+        customHashedCredentialsMatcher.setHashAlgorithmName("MD5");
+        return customHashedCredentialsMatcher;
+    }
 
     @Bean("customRealm")
     public CustomRealm customRealm(){
         CustomRealm customRealm = new CustomRealm();
+        customRealm.setCredentialsMatcher(customHashedCredentialsMatcher());
         return customRealm;
     }
+
     @Bean("securityManager")
     public SecurityManager securityManager(){
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();

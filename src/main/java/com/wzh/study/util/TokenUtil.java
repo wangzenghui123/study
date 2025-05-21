@@ -76,7 +76,11 @@ public class TokenUtil implements InitializingBean {
                 .getBody();
         return claims;
    }
-
+   public static String getUserId(String token){
+       Claims claims = getClaims(token);
+       String userId = (String)claims.get("userId");
+       return userId;
+   }
 
     @Override
     public void afterPropertiesSet() throws Exception {

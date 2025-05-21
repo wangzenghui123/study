@@ -17,10 +17,10 @@ var CoreUtil = (function () {
                 if(headers == undefined){
 
                 }else if(headers){
-                    request.setRequestHeader("access_token", CoreUtil.getData("access_token"));
-                    request.setRequestHeader("refresh_token", CoreUtil.getData("refresh_token"));
+                    request.setRequestHeader("AccessToken", CoreUtil.getData("AccessToken"));
+                    request.setRequestHeader("RefreshToken", CoreUtil.getData("RefreshToken"));
                 }else {
-                    request.setRequestHeader("access_token", CoreUtil.getData("access_token"));
+                    request.setRequestHeader("AccessToken", CoreUtil.getData("AccessToken"));
                 }
 
             },
@@ -45,7 +45,7 @@ var CoreUtil = (function () {
                         /*刷新token  然后存入缓存*/
                         CoreUtil.sendAjax("/api/user/token",null,function (res) {
                             if(res.code==4000000){
-                                CoreUtil.setData("access_token",res.data);
+                                CoreUtil.setData("AccessToken",res.data);
                                 /*刷新成功后继续重复请求*/
                                 CoreUtil.sendAjax(reUrl,reParams,reFt,reMethod,reHeaders,reNoAuthorityFt,reContentType,reAsync);
                             }else {

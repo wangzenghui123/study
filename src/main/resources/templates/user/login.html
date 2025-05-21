@@ -110,8 +110,8 @@
             var field = data.field; // 获取表单字段值
             // 此处可执行 Ajax 等操作
             CoreUtil.sendAjax("/api/user/userLogin",JSON.stringify(field),function(res){
-                CoreUtil.setData("access_token",res.data.accessToken)
-                CoreUtil.setData("refresh_token",res.data.refreshToken)
+                CoreUtil.setData("AccessToken",res.data.accessToken)
+                CoreUtil.setData("RefreshToken",res.data.refreshToken)
                 window.location.href="/api/index";
 
             },undefined,undefined,function (res){

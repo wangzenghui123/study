@@ -14,4 +14,5 @@ public class IndexController {
         return "/user/index";
     }
 
+
 }
