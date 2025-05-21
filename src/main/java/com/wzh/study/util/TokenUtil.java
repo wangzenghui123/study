@@ -65,11 +65,16 @@ public class TokenUtil implements InitializingBean {
     }
 
    public static boolean isTokenExpired(String token){
-       Claims claims = Jwts.parser()
-               .setSigningKey(SIGN_KEY.getBytes())
-               .parseClaimsJws(token)
-               .getBody();
+       Claims claims = getClaims(token);
        return System.currentTimeMillis() > (long) claims.get("expireTime");
+   }
+
+   public static Claims getClaims(String token){
+        Claims claims = Jwts.parser()
+                .setSigningKey(SIGN_KEY.getBytes())
+                .parseClaimsJws(token)
+                .getBody();
+        return claims;
    }
 
 

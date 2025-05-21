@@ -1,5 +1,7 @@
 package com.wzh.study.shiro;
 
+import com.wzh.study.util.TokenUtil;
+import io.jsonwebtoken.Claims;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -20,6 +22,9 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         String  accessToken =(String)principalCollection.getPrimaryPrincipal();
+        Claims claims = TokenUtil.getClaims(accessToken);
+        String  userId = (String)claims.get("userId");
+
         return new SimpleAuthorizationInfo();
     }
 
