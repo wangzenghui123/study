@@ -73,6 +73,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/api/index","anon");
         filterChainDefinitionMap.put("/api/index/404","anon");
         filterChainDefinitionMap.put("/api/mockdata","anon");
+        filterChainDefinitionMap.put("/test.html","anon");
 
 
         filterChainDefinitionMap.put("/**", "customFilter,authc"); // 使用自定义过滤器
