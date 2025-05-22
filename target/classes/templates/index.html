@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="/layui/css/layui.css" rel="stylesheet">
+    <script src="/layui/layui.js"></script>
+    <script src="/js/core.util.js"></script>
+    <style>
+        iframe {
+            margin: 0px;
+            border: 0px;
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .layui-nav {
+            padding: 10px 15px;
+        }
+
+        .layui-nav .layui-nav-item {
+            line-height: 50px;
+        }
+
+        .layui-layout-admin .layui-header {
+            top: -10px;
+        }
+
+        .layui-layout-admin .layui-logo {
+            line-height: 71px;
+        }
+
+        .layui-layout-admin .layui-side {
+            top: 50px;
+        }
+
+        .layui-layout-admin .layui-body {
+            top: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo layui-hide-xs layui-bg-black">layout demo</div>
+
+        <!-- 头部区域（可配合layui 已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <!-- 移动端显示 -->
+            <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft">
+                <i class="layui-icon layui-icon-spread-left"></i>
+            </li>
+            <li class="layui-nav-item layui-hide-xs"><a href="javascript:;">nav 1</a></li>
+            <li class="layui-nav-item layui-hide-xs"><a href="javascript:;">nav 2</a></li>
+            <li class="layui-nav-item layui-hide-xs"><a href="javascript:;">nav 3</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">nav groups</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">menu 11</a></dd>
+                    <dd><a href="javascript:;">menu 22</a></dd>
+                    <dd><a href="javascript:;">menu 33</a></dd>
+                </dl>
+            </li>
+        </ul>
+
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item layui-hide layui-show-sm-inline-block">
+                <a href="javascript:;">
+                    <img src="/images/background1.png" class="layui-nav-img">
+                    tester
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">Your Profile</a></dd>
+                    <dd><a href="javascript:;">Settings</a></dd>
+                    <dd><a href="javascript:;">Sign out</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
+                <a href="javascript:;">
+                    <i class="layui-icon layui-icon-more-vertical"></i>
+                </a>
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul id="menu" class="layui-nav layui-nav-tree" lay-filter="test">
+
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+
+        <div class="layui-tabs layui-hide-v" id="demoTabsBeforeClose" lay-options="{closable: true}">
+            <ul class="layui-tabs-header">
+                <li lay-id="aaa" lay-closable="false">Tab1</li>
+                <li lay-id="ccc">Tab3</li>
+                <li lay-id="ddd">Tab4</li>
+                <li lay-id="eee">Tab5</li>
+                <li lay-id="fff">Tab6</li>
+            </ul>
+        </div>
+        <iframe src="/api/user/user"></iframe>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use(function() {
+        var tabs = layui.tabs;
+        // 标签实例 ID
+        var DEMO_TABS_ID = 'demoTabsBeforeClose';
+        // tabs 切换前的事件
+        tabs.on(`beforeClose(${DEMO_TABS_ID})`, function(data) {
+            console.log('beforeClose', data);
+            // 关闭确认提示
+            layer.confirm(`确定关闭标签「${this.innerText}」吗？`, function(i) {
+                tabs.close(DEMO_TABS_ID, data.index, true); // 强制关闭对应的标签项
+                layer.close(i); // 关闭确认框
+            });
+            // 阻止标签默认关闭
+            return false;
+        });
+    });
+</script>
+<script>
+    var getChildren = function (children) {
+        let childMenuStr = ""
+        childMenuStr = childMenuStr + "<dl class=\"layui-nav-child\">"
+        for (let index in children) {
+            childMenuStr = childMenuStr + "<dd>"
+            childMenuStr = childMenuStr + "<a href=\"javascript:;\">"
+            childMenuStr = childMenuStr + children[index].name + "</a>"
+            if (children[index].children.length > 0) {
+                childMenuStr = childMenuStr + getChildren(children[index].children)
+            }
+
+            childMenuStr = childMenuStr + "</dd>"
+        }
+        childMenuStr = childMenuStr + "</dl>"
+        return childMenuStr;
+    }
+    var menuStr = ""
+    var leftmenu = function (menuVO) {
+        let children = menuVO.children;
+
+
+        for (let index in children) {
+
+            menuStr = menuStr + "<li class=\"layui-nav-item\">" + "<a href=\"javascript:;\">" + children[index].name + "</a>";
+            if (children[index].children.length > 0) {
+                menuStr = menuStr + getChildren(children[index].children)
+            }
+            menuStr = menuStr + "</li>"
+        }
+        return menuStr;
+    }
+
+</script>
+<script>
+    layui.use(function () {
+        var $ = layui.$;
+        var tabs = layui.tabs;
+        var util = layui.util;
+        var dropdown = layui.dropdown;
+        var element = layui.element;
+
+
+        CoreUtil.sendAjax("/api/menu", null, function (res) {
+            let menuStr = leftmenu(res.data)
+            $("#menu").html(menuStr)
+
+
+            element.render()
+        }, "GET", true, function (res) {
+            console.log(res)
+        }, true, "application/json;charset=UTF-8")
+
+
+
+        // 为标签头添加上下文菜单
+        var dropdownInst = dropdown.render({
+            elem: '#demoTabs1 .layui-tabs-header>li',
+            trigger: 'contextmenu',
+            data: [{
+                title: '在右侧新增标签页',
+                action: 'add',
+                mode: 'after'
+            }, {
+                type: '-'
+            }, {
+                title: '关闭',
+                action: 'close',
+                mode: 'this',
+            }, {
+                title: '关闭其他标签页',
+                action: 'close',
+                mode: 'other'
+            }, {
+                title: '关闭右侧标签页',
+                action: 'close',
+                mode: 'right'
+            }, {
+                title: '关闭所有标签页',
+                action: 'close',
+                mode: 'all'
+            }],
+            click: function (data, othis, event) {
+                var index = this.elem.index(); // 获取活动标签索引
+                // 新增标签操作
+                if (data.action === 'add') {
+                    // 在当前活动标签右侧新增标签页
+                    addTabs({
+                        mode: data.mode,
+                        index: index
+                    });
+                } else if (data.action === 'close') { // 关闭标签操作
+                    if (data.mode === 'this') {
+                        tabs.close('demoTabs1', index); // 关闭当前标签
+                    } else {
+                        tabs.closeMult('demoTabs1', data.mode, index); // 批量关闭标签
+                    }
+                }
+            }
+        });
+        // 新增随机标签
+        var addTabs = function (opts) {
+            var n = Math.random() * 1000 | 0; // 演示标记
+            opts = $.extend({
+                title: 'New Tab ' + n, // 此处加 n 仅为演示区分，实际应用不需要
+                content: 'New Tab Content ' + n,
+                id: 'new-' + n,
+                done: function (data) {
+                    console.log(data); // 查看返回的参数
+                    // 给新标签头添加上下文菜单
+                    dropdown.render($.extend({}, dropdownInst.config, {
+                        elem: data.headerItem // 新标签头元素 --- headerItem 为 2.11.2 新增
+                    }));
+                }
+            }, opts);
+            // 添加标签到最后
+            tabs.add('demoTabs1', opts);
+        }
+        // 自定义事件
+        util.on({
+            add: function () {
+                addTabs();
+            }
+        });
+    });
+</script>
+
+<!--<script>-->
+<!--    //JS-->
+<!--    layui.use(['element', 'layer', 'util', 'table', 'dropdown'], function () {-->
+<!--        var element = layui.element;-->
+<!--        var layer = layui.layer;-->
+<!--        var util = layui.util;-->
+<!--        var $ = layui.$;-->
+
+<!--        //头部事件-->
+<!--        util.event('lay-header-event', {-->
+<!--            menuLeft: function (othis) { // 左侧菜单事件-->
+<!--                layer.msg('展开左侧菜单的操作', {icon: 0});-->
+<!--            },-->
+<!--            menuRight: function () {  // 右侧菜单事件-->
+<!--                layer.open({-->
+<!--                    type: 1,-->
+<!--                    title: '更多',-->
+<!--                    content: '<div style="padding: 15px;">处理右侧面板的操作</div>',-->
+<!--                    area: ['260px', '100%'],-->
+<!--                    offset: 'rt', // 右上角-->
+<!--                    anim: 'slideLeft', // 从右侧抽屉滑出-->
+<!--                    shadeClose: true,-->
+<!--                    scrollbar: false-->
+<!--                });-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
+
+
+
+
+
+
+
+
+
+
+

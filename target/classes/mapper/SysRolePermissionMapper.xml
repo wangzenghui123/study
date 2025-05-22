@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzh.study.mapper.SysRolePermissionMapper">
+
+    <select id="getPermissionIds"  resultType="java.lang.String">
+        select permission_id from sys_role_permission
+        where role_id = #{roleId}
+    </select>
+
+</mapper>
