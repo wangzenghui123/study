@@ -4,6 +4,7 @@ import com.wzh.study.code.ResponseCode;
 import com.wzh.study.entity.SysUser;
 import com.wzh.study.exception.BusinessException;
 import com.wzh.study.mapper.SysUserMapper;
+import com.wzh.study.redis.RedisService;
 import com.wzh.study.util.DataResult;
 import com.wzh.study.util.PasswordUtil;
 import com.wzh.study.util.TokenUtil;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.util.HashMap;
 
 @Service
@@ -22,6 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private SysUserMapper sysUserMapper;
+
 
     @Override
     public DataResult userLogin(UserLoginReqVO userLoginReqVO) {
@@ -44,6 +47,7 @@ public class UserServiceImpl implements UserService {
         UserLoginRespVO userLoginRespVO = new UserLoginRespVO();
         String accessToken = TokenUtil.createAccessToken(sysUser.getId(), sysUser.getUsername(), new HashMap<>());
         String refreshToken = TokenUtil.createRefreshToken(sysUser.getId(), sysUser.getUsername(), new HashMap<>());
+        RedisService.set("access_token_" + accessToken,accessToken, Duration.parse("PT50S"));
         userLoginRespVO.setAccessToken(accessToken);
         userLoginRespVO.setRefreshToken(refreshToken);
         dataResult.setData(userLoginRespVO);

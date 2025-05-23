@@ -40,6 +40,9 @@ public class TokenUtil implements InitializingBean {
 
     private static String REFRESH_TOKEN_APP_DURATION_TIME;
 
+    public static String getAccessTokenDurationTime(){
+        return ACCESS_TOKEN_DURATION_TIME;
+    }
     public static String createAccessToken(String userId,String username,Map<String,Object> claims){
         String accessToken = createToken(userId, username, ACCESS_TOKEN_DURATION_TIME, claims);
         return accessToken;

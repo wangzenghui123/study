@@ -22,6 +22,7 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
+
     @Bean("customHashedCredentialsMatcher")
     public CustomHashedCredentialsMatcher customHashedCredentialsMatcher(){
         CustomHashedCredentialsMatcher customHashedCredentialsMatcher = new CustomHashedCredentialsMatcher();
@@ -42,6 +43,7 @@ public class ShiroConfig {
         defaultWebSecurityManager.setRealm(customRealm());
         return defaultWebSecurityManager;
     }
+
     @EventListener
     public void handleContextRefresh(ContextRefreshedEvent event) {
         ApplicationContext context = event.getApplicationContext();
@@ -49,6 +51,7 @@ public class ShiroConfig {
         CustomRealm customRealm = (CustomRealm) context.getBean("customRealm");
         manager.setRealm(customRealm);
     }
+
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
@@ -70,10 +73,11 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/images/**","anon");
         filterChainDefinitionMap.put("/api/user/login","anon");
         filterChainDefinitionMap.put("/api/user/userLogin","anon");
-        filterChainDefinitionMap.put("/api/index","anon");
         filterChainDefinitionMap.put("/api/index/404","anon");
+        filterChainDefinitionMap.put("/api/index","anon");
         filterChainDefinitionMap.put("/api/mockdata","anon");
         filterChainDefinitionMap.put("/test.html","anon");
+        filterChainDefinitionMap.put("/static/**","anon");
 
 
         filterChainDefinitionMap.put("/**", "customFilter,authc"); // 使用自定义过滤器
@@ -81,18 +85,13 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
 
-
-    /**
-     *  开启shiro aop注解支持.
-     *  使用代理方式;所以需要开启代码支持;
-     * @return
-     */
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
     }
+
     @Bean
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
         DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();

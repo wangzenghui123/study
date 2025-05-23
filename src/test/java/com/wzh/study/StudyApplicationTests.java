@@ -6,12 +6,16 @@ import com.wzh.study.mapper.SysPermissionMapper;
 import com.wzh.study.mapper.SysRolePermissionMapper;
 import com.wzh.study.mapper.SysUserMapper;
 import com.wzh.study.mapper.SysUserRoleMapper;
+import com.wzh.study.redis.RedisService;
 import com.wzh.study.util.PasswordUtil;
 import com.wzh.study.util.TokenUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,6 +33,24 @@ class StudyApplicationTests {
 
     @Autowired
     private SysPermissionMapper sysPermissionMapper;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    private RedisService redisService;
+
+    @Test
+    void testCode() {
+        String checheCode = "cheche_code";
+        String code = "168901";
+        SysUser sysUser = new SysUser();
+        sysUser.setId("id123456");
+        RedisService.set(checheCode,sysUser, Duration.parse("PT30S"));
+
+
+    }
+
 
     @Test
     void contextLoads() throws InterruptedException {
