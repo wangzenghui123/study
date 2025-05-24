@@ -10,6 +10,8 @@ import com.wzh.study.util.PasswordUtil;
 import com.wzh.study.util.TokenUtil;
 import com.wzh.study.vo.reqVO.user.UserLoginReqVO;
 import com.wzh.study.vo.respVO.user.UserLoginRespVO;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,5 +54,15 @@ public class UserServiceImpl implements UserService {
         userLoginRespVO.setRefreshToken(refreshToken);
         dataResult.setData(userLoginRespVO);
         return  dataResult;
+    }
+
+    @Override
+    public String refreshAccessToken(String accessToken) {
+        System.out.println("进入刷新token");
+        String userId = TokenUtil.getUserId(accessToken);
+        String username = TokenUtil.getUsername(accessToken);
+
+        String accessToken1 = TokenUtil.createAccessToken(userId, username, new HashMap<>());
+        return accessToken1;
     }
 }

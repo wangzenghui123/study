@@ -209,12 +209,38 @@
                     tabs.add('demoTabs1', opts);
                 }
                 addTabs()
-
-
             }
             $("#iframeWindow").attr("src", tabUrl)
 
         })
+
+        //删除tab
+        // tabs 切换前的事件
+        tabs.on(`beforeClose(demoTabs1)`, function(data) {
+            let currTabIndex = data.index;
+            let currTabContainerLength = data.length
+
+            let tabHeader = $('.layui-tabs-header').eq(0)
+            let currShowTab = $(tabHeader).children(".layui-this")[0]
+            let currShowTabIndex = $(currShowTab).index();
+
+            if(currTabIndex == currShowTabIndex){
+                if(currTabIndex == currTabContainerLength - 1){
+                    tabs.close(demoTabs1, data.index, true);
+                    tabs.change('demoTabs1',currTabIndex - 1);
+                    let prevUrl = $(this).prev().attr("lay-id");
+                    $("#iframeWindow").attr("src", prevUrl)
+                }else{
+                    tabs.close(demoTabs1, data.index, true);
+                    tabs.change('demoTabs1',currTabIndex + 1);
+                    let nextUrl = $(this).next().attr("lay-id");
+                    $("#iframeWindow").attr("src", nextUrl)
+                }
+            }
+            return true;
+        });
+
+
 
         // 为标签头添加上下文菜单
         var dropdownInst = dropdown.render({
@@ -255,13 +281,11 @@
         //监听tab点击事件
         $("*[class='layui-tabs-header']").on('click', 'li', function (event) {
             let layId = $(event.target).attr("lay-id")
-            console.log(layId)
             $("#iframeWindow").attr("src", layId)
-
         })
-        tabs.on('afterClose(demoTabs1)', function(data) {
-            console.log(data.length);
-        });
+
+
+
     });
 </script>
 </html>

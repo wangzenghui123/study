@@ -72,6 +72,11 @@ public class TokenUtil implements InitializingBean {
        return System.currentTimeMillis() > (long) claims.get("expireTime");
    }
 
+    public static Boolean validateToken(String token) {
+        Claims claimsFromToken = getClaims(token);
+        return (null!=claimsFromToken && !isTokenExpired(token));
+    }
+
    public static Claims getClaims(String token){
         Claims claims = Jwts.parser()
                 .setSigningKey(SIGN_KEY.getBytes())
@@ -84,6 +89,11 @@ public class TokenUtil implements InitializingBean {
        String userId = (String)claims.get("userId");
        return userId;
    }
+    public static String getUsername(String token){
+        Claims claims = getClaims(token);
+        String username = (String)claims.get("username");
+        return username;
+    }
 
     @Override
     public void afterPropertiesSet() throws Exception {

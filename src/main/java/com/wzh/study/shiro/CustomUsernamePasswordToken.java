@@ -3,8 +3,10 @@ package com.wzh.study.shiro;
 import lombok.Data;
 import org.apache.shiro.authc.UsernamePasswordToken;
 
+import java.io.Serializable;
+
 @Data
-public class CustomUsernamePasswordToken extends UsernamePasswordToken {
+public class CustomUsernamePasswordToken extends UsernamePasswordToken  {
 
     private String accessToken;
 

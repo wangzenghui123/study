@@ -287,6 +287,6 @@ public class demo {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(str);
         System.out.println(jsonNode);
-        return jsonNode;
+        return null;
     }
 }

@@ -29,9 +29,10 @@ var CoreUtil = (function () {
                 if (typeof ft == "function") {
                     if(res.code==4000002){ //凭证过期重新登录
                         layer.msg("凭证过期请重新登录")
-                        top.window.location.href="/index/login"
+                        setTimeout(function() {
+                            top.window.location.href="/api/user/login"
+                        }, 3000); // 3000毫秒，即3秒
                     }
-
                     else if(res.code==4000001){//根据后端提示刷新token
                         /*记录要重复刷新的参数*/
                         var reUrl=url;
@@ -42,6 +43,7 @@ var CoreUtil = (function () {
                         var reContentType=contentType;
                         var reAsync=async;
                         var reNoAuthorityFt=noAuthorityFt;
+                        console.log("进入ajax刷新token")
                         /*刷新token  然后存入缓存*/
                         CoreUtil.sendAjax("/api/user/token",null,function (res) {
                             if(res.code==4000000){
@@ -50,7 +52,10 @@ var CoreUtil = (function () {
                                 CoreUtil.sendAjax(reUrl,reParams,reFt,reMethod,reHeaders,reNoAuthorityFt,reContentType,reAsync);
                             }else {
                                 layer.msg("凭证过期请重新登录");
-                                top.window.location.href="/index/login"
+                                setTimeout(function() {
+                                    top.window.location.href="/index/login"
+                                }, 2000);
+
                             }
                         },"GET",true)
                     }
@@ -70,7 +75,7 @@ var CoreUtil = (function () {
             },error:function (XMLHttpRequest, textStatus, errorThrown) {
                 top.layer.close(roleSaveLoading);
                 if(XMLHttpRequest.status===404){
-                    top.window.location.href="/api/index/404";
+                    // top.window.location.href="/api/index/404";
                 }else{
                     layer.msg("服务器好像除了点问题！请稍后试试");
                 }

@@ -6,4 +6,5 @@ import com.wzh.study.vo.reqVO.user.UserLoginReqVO;
 public interface UserService {
 
     DataResult userLogin(UserLoginReqVO userLoginReqVO);
+    String refreshAccessToken(String accessToken);
 }

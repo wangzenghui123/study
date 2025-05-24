@@ -73,6 +73,7 @@ public class ShiroConfig {
 
         LinkedHashMap<String, Filter> filters = new LinkedHashMap<>();
         filters.put("customFilter",new CustomFilter());
+        filters.put("customVerifyTokenFilter",new CustomVerifyTokenFilter());
         shiroFilterFactoryBean.setFilters(filters);
 
 
@@ -84,14 +85,19 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/images/**","anon");
         filterChainDefinitionMap.put("/api/user/login","anon");
         filterChainDefinitionMap.put("/api/user/userLogin","anon");
+        filterChainDefinitionMap.put("/api/user/token","anon");
         filterChainDefinitionMap.put("/api/index/404","anon");
         filterChainDefinitionMap.put("/api/index","anon");
-        filterChainDefinitionMap.put("/api/mockdata","anon");
         filterChainDefinitionMap.put("/test.html","anon");
         filterChainDefinitionMap.put("/static/**","anon");
+        filterChainDefinitionMap.put("/favicon.ico","anon");
+        filterChainDefinitionMap.put("/api/home","anon");
+        filterChainDefinitionMap.put("/api/user","anon");
+        filterChainDefinitionMap.put("/api/role","anon");
+        filterChainDefinitionMap.put("/api/permission","anon");
+        filterChainDefinitionMap.put("/**", "customFilter,customVerifyTokenFilter,authc"); // 使用自定义过滤器
 
-
-        filterChainDefinitionMap.put("/**", "customFilter,authc"); // 使用自定义过滤器
+        shiroFilterFactoryBean.setLoginUrl("/api/user/login");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }

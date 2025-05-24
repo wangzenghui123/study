@@ -95,6 +95,8 @@
             <version>2.3.1</version>
         </dependency>
 
+
+
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
@@ -150,7 +152,7 @@
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
-            <version>1.10.1</version>
+            <version>1.4.1</version>
         </dependency>
 
 
@@ -166,8 +168,15 @@
             <artifactId>jedis</artifactId>
             <version>5.0.1</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>com.github.theborakompanioni</groupId>
+            <artifactId>thymeleaf-extras-shiro</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
