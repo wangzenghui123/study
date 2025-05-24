@@ -10,9 +10,10 @@
     <script src="/layui/layui.js"></script>
     <script src="/js/core.util.js"></script>
     <style>
-        body{
+        body {
             overflow: hidden;
         }
+
         iframe {
             margin: 0;
             border: 0;
@@ -104,12 +105,10 @@
     <div class="layui-body">
         <div class="layui-tabs layui-hide-v" id="demoTabs1" lay-options="{closable: true}">
             <ul class="layui-tabs-header">
-
             </ul>
         </div>
 
         <iframe id="iframeWindow" src="">
-
         </iframe>
     </div>
 </div>
@@ -120,7 +119,7 @@
         childMenuStr = childMenuStr + "<dl class=\"layui-nav-child\">"
         for (let index in children) {
             childMenuStr = childMenuStr + "<dd>"
-            childMenuStr = childMenuStr + "<a url=\""+children[index].url+"\" href=\"javascript:;\">"
+            childMenuStr = childMenuStr + "<a url=\"" + children[index].url + "\" href=\"javascript:;\">"
             childMenuStr = childMenuStr + children[index].name + "</a>"
             if (children[index].children.length > 0 && children[index].type == 1) {
                 childMenuStr = childMenuStr + getChildren(children[index].children)
@@ -135,10 +134,10 @@
     var leftmenu = function (menuVO) {
         let children = menuVO.children;
         for (let index in children) {
-            if(children[index].children.length == 0){
-                menuStr = menuStr + "<li class=\"layui-nav-item\">" + "<a url=\""+children[index].url+"\" href=\"javascript:;\">"+ children[index].name + "</a>"
+            if (children[index].children.length == 0) {
+                menuStr = menuStr + "<li class=\"layui-nav-item\">" + "<a url=\"" + children[index].url + "\" href=\"javascript:;\">" + children[index].name + "</a>"
 
-            }else{
+            } else {
                 menuStr = menuStr + "<li class=\"layui-nav-item\">" + "<a href=\"javascript:;\">" + children[index].name + "</a>";
                 if (children[index].children.length > 0 && children[index].type == 1) {
                     menuStr = menuStr + getChildren(children[index].children)
@@ -164,16 +163,16 @@
             let menuStr = leftmenu(res.data)
             $("#menu").html(menuStr)
             let name = res.data.children[0].name;
-            let url =res.data.children[0].url;
-            tabs.add('demoTabs1',{
+            let url = res.data.children[0].url;
+            tabs.add('demoTabs1', {
                 title: name,
-                id:url,
+                id: url,
                 content: '',
-                closable:false,
-                done: function(data) {
+                closable: false,
+                done: function (data) {
                 }
             })
-            $("#iframeWindow").attr("src",url)
+            $("#iframeWindow").attr("src", url)
             element.render()
         }, "GET", true, function (res) {
             console.log(res)
@@ -181,19 +180,39 @@
 
 
         //新增tab
-        $("a[url]").on('click',function (event){
+        $("a[url]").on('click', function (event) {
             let tabUrl = $(event.target).attr("url")
             let tabName = $(event.target).text()
-            if(tabs.getHeaderItem('demoTabs1', tabUrl).length == 1){
-                tabs.change("demoTabs1",tabUrl)
-            }else{
-                tabs.add('demoTabs1', {
-                    title: tabName,
-                    content: '',
-                    id:tabUrl
-                });
+            if (tabs.getHeaderItem('demoTabs1', tabUrl).length == 1) {
+                tabs.change("demoTabs1", tabUrl)
+            } else {
+                // tabs.add('demoTabs1', {
+                //     title: tabName,
+                //     content: '',
+                //     id:tabUrl
+                // });
+                // 新增随机标签
+                var addTabs = function (opts) {
+                    opts = $.extend({
+                        title: tabName,
+                        content: '',
+                        id: tabUrl,
+                        done: function (data) {
+                            console.log(data); // 查看返回的参数
+                            // 给新标签头添加上下文菜单
+                            dropdown.render($.extend({}, dropdownInst.config, {
+                                elem: data.headerItem // 新标签头元素 --- headerItem 为 2.11.2 新增
+                            }));
+                        }
+                    }, opts);
+                    // 添加标签到最后
+                    tabs.add('demoTabs1', opts);
+                }
+                addTabs()
+
+
             }
-            $("#iframeWindow").attr("src",tabUrl)
+            $("#iframeWindow").attr("src", tabUrl)
 
         })
 
@@ -202,16 +221,6 @@
             elem: '#demoTabs1 .layui-tabs-header>li',
             trigger: 'contextmenu',
             data: [{
-                title: '在右侧新增标签页',
-                action: 'add',
-                mode: 'after'
-            }, {
-                type: '-'
-            }, {
-                title: '关闭',
-                action: 'close',
-                mode: 'this',
-            }, {
                 title: '关闭其他标签页',
                 action: 'close',
                 mode: 'other'
@@ -226,40 +235,17 @@
             }],
             click: function (data, othis, event) {
                 var index = this.elem.index(); // 获取活动标签索引
-                // 新增标签操作
-                if (data.action === 'add') {
-                    // 在当前活动标签右侧新增标签页
-                    addTabs({
-                        mode: data.mode,
-                        index: index
-                    });
-                } else if (data.action === 'close') { // 关闭标签操作
+                if (data.action === 'close') { // 关闭标签操作
                     if (data.mode === 'this') {
                         tabs.close('demoTabs1', index); // 关闭当前标签
                     } else {
-                        tabs.closeMult('demoTabs1', data.mode, index); // 批量关闭标签
+                        // tabs.closeMult('demoTabs1', data.mode, index); // 批量关闭标签
+                        tabs.closeMult('demoTabs1', 'right', 0); // 关闭索引为 3 的标签的右侧所有标签
                     }
                 }
             }
         });
-        // 新增随机标签
-        var addTabs = function (opts) {
-            var n = Math.random() * 1000 | 0; // 演示标记
-            opts = $.extend({
-                title: 'New Tab ' + n, // 此处加 n 仅为演示区分，实际应用不需要
-                content: 'New Tab Content ' + n,
-                id: 'new-' + n,
-                done: function (data) {
-                    console.log(data); // 查看返回的参数
-                    // 给新标签头添加上下文菜单
-                    dropdown.render($.extend({}, dropdownInst.config, {
-                        elem: data.headerItem // 新标签头元素 --- headerItem 为 2.11.2 新增
-                    }));
-                }
-            }, opts);
-            // 添加标签到最后
-            tabs.add('demoTabs1', opts);
-        }
+
         // 自定义事件
         util.on({
             add: function () {
@@ -267,12 +253,15 @@
             }
         });
         //监听tab点击事件
-        $("*[class='layui-tabs-header']").on('click','li',function (event){
+        $("*[class='layui-tabs-header']").on('click', 'li', function (event) {
             let layId = $(event.target).attr("lay-id")
             console.log(layId)
-            $("#iframeWindow").attr("src",layId)
+            $("#iframeWindow").attr("src", layId)
 
         })
+        tabs.on('afterClose(demoTabs1)', function(data) {
+            console.log(data.length);
+        });
     });
 </script>
 </html>
