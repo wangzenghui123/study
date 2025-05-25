@@ -73,7 +73,6 @@ public class ShiroConfig {
 
         LinkedHashMap<String, Filter> filters = new LinkedHashMap<>();
         filters.put("customFilter",new CustomFilter());
-        filters.put("customVerifyTokenFilter",new CustomVerifyTokenFilter());
         shiroFilterFactoryBean.setFilters(filters);
 
 
@@ -95,7 +94,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/api/user","anon");
         filterChainDefinitionMap.put("/api/role","anon");
         filterChainDefinitionMap.put("/api/permission","anon");
-        filterChainDefinitionMap.put("/**", "customFilter,customVerifyTokenFilter,authc"); // 使用自定义过滤器
+        filterChainDefinitionMap.put("/**", "customFilter,authc"); // 使用自定义过滤器
 
         shiroFilterFactoryBean.setLoginUrl("/api/user/login");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

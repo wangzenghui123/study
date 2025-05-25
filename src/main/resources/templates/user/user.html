@@ -9,7 +9,7 @@
 
 <div style="padding: 3px;">
     <table class="layui-hide" id="test" lay-filter="test"></table>
-
+    <div id="laypage"></div>
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
@@ -40,11 +40,43 @@
 </script>
 
 <script>
-    layui.use(['table', 'dropdown'], function () {
+    layui.use(['table', 'dropdown','laypage'], function () {
         var table = layui.table;
         var dropdown = layui.dropdown;
+        var laypage = layui.laypage;
+        var searchParam={
+            pageNum:1,
+            pageSize:10,
+            username:null,
+            userId:null,
+            status:null,
+            startTime:null,
+            endTime:null,
+            nickName:null
+        }
 
-        CoreUtil.sendAjax("user/show",null,function (res){
+        laypage.render({
+            elem: 'laypage', // 元素 id
+            count: 100, // 数据总数
+            limit:20,
+            limits:[20,50,100],
+            curr:1,
+            groups:5,
+            prev:'上一页',
+            next:'下一页',
+            layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'], // 功能布局
+            jump: function(obj, first){
+                console.log(obj.curr); // 得到当前页，以便向服务端请求对应页的数据。
+                console.log(obj.limit); // 得到每页显示的条数
+
+                // 首次不执行
+                if(!first){
+                    // do something
+                }
+            }
+        });
+
+        CoreUtil.sendAjax("user/list",null,function (res){
             console.log(res)
             // 创建渲染实例
             table.render({
@@ -59,13 +91,13 @@
                         layer.alert('自定义工具栏图标按钮');
                     }
                 }],
-                height: 'full-40', // 最大高度减去其他容器已占有的高度差
+                height: 'full-90', // 最大高度减去其他容器已占有的高度差
                 css: [ // 重设当前表格样式
                     '.layui-table-tool-temp{padding-right: 145px;}'
                 ].join(''),
                 cellMinWidth: 80,
                 // totalRow: true, // 开启合计行
-                page: true,
+                page: false,
                 cols: [
                     [
                         {type: 'checkbox', fixed: 'left'},

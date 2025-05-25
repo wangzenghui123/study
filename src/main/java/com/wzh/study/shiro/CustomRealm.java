@@ -29,6 +29,7 @@ public class CustomRealm extends AuthorizingRealm {
         String  accessToken =(String)principalCollection.getPrimaryPrincipal();
         Claims claims = TokenUtil.getClaims(accessToken);
         String  userId = (String)claims.get("userId");
+        System.out.println("设置权限");
         HashSet<String> set = new HashSet<>();
         set.add("per");
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();

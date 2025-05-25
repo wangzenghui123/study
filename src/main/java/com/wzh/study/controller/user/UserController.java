@@ -56,9 +56,9 @@ public class UserController {
 
     }
 
-    @GetMapping("/user/show")
+    @GetMapping("/user/list")
     @ResponseBody
-    public DataResult<Object> userShow() throws JsonProcessingException {
+    public DataResult<Object> userList() throws JsonProcessingException {
 
         DataResult<Object> dataResult = new DataResult<>(ResponseCode.SUCCESS);
         dataResult.setData(getMockData());

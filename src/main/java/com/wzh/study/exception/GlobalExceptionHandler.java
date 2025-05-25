@@ -2,7 +2,7 @@ package com.wzh.study.exception;
 
 import com.wzh.study.code.ResponseCode;
 import com.wzh.study.util.DataResult;
-import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -17,9 +17,9 @@ public class GlobalExceptionHandler {
         return dataResult;
     }
 
-    @ExceptionHandler(AuthenticationException.class)
-    public DataResult error1(AuthenticationException authenticationException){
-        DataResult dataResult = new DataResult<>(ResponseCode.ACCESS_TOKEN_EXPIRED);
+    @ExceptionHandler(AuthorizationException.class)
+    public DataResult unauthorizedException(AuthorizationException e){
+        DataResult dataResult = new DataResult<>(ResponseCode.NO_AUTHORITY);
         return dataResult;
     }
 

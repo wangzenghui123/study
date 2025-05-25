@@ -159,7 +159,6 @@
 
 
         CoreUtil.sendAjax("/api/menu", null, function (res) {
-            console.log(res.data)
             let menuStr = leftmenu(res.data)
             $("#menu").html(menuStr)
             let name = res.data.children[0].name;
@@ -175,7 +174,6 @@
             $("#iframeWindow").attr("src", url)
             element.render()
         }, "GET", true, function (res) {
-            console.log(res)
         }, false, "application/json;charset=UTF-8")
 
 
@@ -198,7 +196,6 @@
                         content: '',
                         id: tabUrl,
                         done: function (data) {
-                            console.log(data); // 查看返回的参数
                             // 给新标签头添加上下文菜单
                             dropdown.render($.extend({}, dropdownInst.config, {
                                 elem: data.headerItem // 新标签头元素 --- headerItem 为 2.11.2 新增

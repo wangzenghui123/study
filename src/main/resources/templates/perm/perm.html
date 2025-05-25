@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="/layui/css/layui.css" rel="stylesheet">
+    <script src="/layui/layui.js"></script>
+    <script src="/js/core.util.js"></script>
+
 </head>
 <body>
 perm
 </body>
+<script>
+    CoreUtil.sendAjax("/api/permission/test",null,function (res) {
+        console.log(res)
+    },"GET",true,function (res){
+        console.log(res)
+    })
+</script>
 </html>

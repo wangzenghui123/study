@@ -43,7 +43,6 @@ var CoreUtil = (function () {
                         var reContentType=contentType;
                         var reAsync=async;
                         var reNoAuthorityFt=noAuthorityFt;
-                        console.log("进入ajax刷新token")
                         /*刷新token  然后存入缓存*/
                         CoreUtil.sendAjax("/api/user/token",null,function (res) {
                             if(res.code==4000000){
