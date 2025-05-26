@@ -1,8 +1,13 @@
 package com.wzh.study.shiro;
 
+import com.wzh.study.entity.SysPermission;
+import com.wzh.study.entity.SysRole;
+import com.wzh.study.service.PermissionService;
+import com.wzh.study.service.RolePermissionService;
+import com.wzh.study.service.RoleService;
+import com.wzh.study.service.UserRoleService;
 import com.wzh.study.util.TokenUtil;
 import io.jsonwebtoken.Claims;
-import org.apache.commons.collections.ArrayStack;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -10,14 +15,25 @@ import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
-import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class CustomRealm extends AuthorizingRealm {
+
+    @Autowired
+    private UserRoleService userRoleService;
+
+    @Autowired
+    private RolePermissionService rolePermissionService;
+
+    @Autowired
+    private PermissionService permissionService;
+
+    @Autowired
+    private RoleService roleService;
 
     @Override
     public boolean supports(AuthenticationToken token) {
@@ -29,11 +45,22 @@ public class CustomRealm extends AuthorizingRealm {
         String  accessToken =(String)principalCollection.getPrimaryPrincipal();
         Claims claims = TokenUtil.getClaims(accessToken);
         String  userId = (String)claims.get("userId");
-        System.out.println("设置权限");
-        HashSet<String> set = new HashSet<>();
-        set.add("per");
+        String roleId = userRoleService.getRoleId(userId);
+        List<String> permissionIds = rolePermissionService.getPermissionIds(roleId);
+        List<SysPermission> permissions = permissionService.getPermissions(permissionIds);
+
+        SysRole sysRole = roleService.queryRoleByRoleId(roleId);
+        HashSet<String> roleSet = new HashSet<>();
+        roleSet.add(sysRole.getRoleName());
+
+        HashSet<String> permissionSet = new HashSet<>();
+        for (SysPermission permission : permissions) {
+            permissionSet.add(permission.getPerms());
+        }
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.setStringPermissions(set);
+        info.setStringPermissions(permissionSet);
+        info.setRoles(roleSet);
+        System.out.println(roleSet);
         return info;
     }
 

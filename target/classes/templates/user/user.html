@@ -44,35 +44,22 @@
         var table = layui.table;
         var dropdown = layui.dropdown;
         var laypage = layui.laypage;
-        // 完整显示
+        var searchParam={
+            pageNum:1,
+            pageSize:20,
+            username:null,
+            userId:null,
+            status:null,
+            startTime:null,
+            endTime:null,
+            nickName:null
+        }
 
-        laypage.render({
-            elem: 'laypage', // 元素 id
-            count: 100, // 数据总数
-            limit:20,
-            limits:[20,50,100],
-            curr:1,
-            groups:5,
-            prev:'上一页',
-            next:'下一页',
-            layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'], // 功能布局
-            jump: function(obj, first){
-                console.log(obj.curr); // 得到当前页，以便向服务端请求对应页的数据。
-                console.log(obj.limit); // 得到每页显示的条数
 
-                // 首次不执行
-                if(!first){
-                    // do something
-                }
-            }
-        });
-
-        CoreUtil.sendAjax("user/list",null,function (res){
-            console.log(res)
-            // 创建渲染实例
+        var renderTable = function (data){
             table.render({
                 elem: '#test',
-                data: res.data.data,
+                data: data,
                 toolbar: '#toolbarDemo',
                 defaultToolbar: ['filter', 'exports', 'print', { // 右上角工具图标
                     title: '提示',
@@ -95,34 +82,24 @@
                         {field: 'id', fixed: 'left', width: 80, title: 'ID', sort: true, totalRow: '合计：'},
                         {field: 'username', width: 80, title: '用户'},
                         {
-                            field: 'email',
+                            field: 'salt',
                             title: '邮箱 <i class="layui-icon layui-icon-tips layui-font-14" lay-event="email-tips" title="该字段开启了编辑功能" style="margin-left: 5px;"></i>',
-                            fieldTitle: '邮箱',
+                            fieldTitle: '盐',
                             hide: 0,
                             width: 150,
                             expandedMode: 'tips',
                             edit: 'text'
                         },
-                        {field: 'sex', width: 80, title: '性别', sort: true},
+                        {field: 'password', width: 80, title: '密码'},
                         {
-                            field: 'sign',
-                            title: '签名',
+                            field: 'phone',
+                            title: '手机号',
                             edit: 'textarea',
                             minWidth: 260,
-                            expandedWidth: 260,
-                            totalRow: '人物：<span class="layui-badge-rim">唐代：{{= d.TOTAL_ROW.era.tang }} </span> <span class="layui-badge-rim">宋代：{{= d.TOTAL_ROW.era.song }}</span> <span class="layui-badge-rim">现代：{{= d.TOTAL_ROW.era.xian }}</span>'
+                            expandedWidth: 260
                         },
-                        {field: 'experience', width: 100, title: '积分', sort: true, totalRow: '{{= d.TOTAL_NUMS }} 😊'},
-                        {
-                            field: 'checkin',
-                            title: '打卡',
-                            width: 100,
-                            sort: true,
-                            totalRow: '{{= parseInt(d.TOTAL_NUMS) }} 次'
-                        },
-                        {field: 'ip', title: 'IP', width: 120},
-                        {field: 'joinTime', title: '加入时间', width: 120},
-                        {fixed: 'right', title: '操作', width: 134, minWidth: 125, templet: '#toolDemo'}
+                        {field: 'deptId', width: 80, title: '部门编号'},
+                        {fixed: 'right', title:'操作', width: 134, minWidth: 125, templet: '#toolDemo'}
                     ]
                 ],
                 done: function () {
@@ -288,8 +265,45 @@
                     console.log(res, msg)
                 }
             });
-        },"GET",true,function (res){
-            console.log(res)
+        }
+
+        var renderLayPage = function (count){
+            laypage.render({
+                elem: 'laypage', // 元素 id
+                count:count,
+                limit:searchParam.pageSize,
+                limits:[20,50,100],
+                curr:searchParam.pageNum,
+                groups:5,
+                prev:'上一页',
+                next:'下一页',
+                layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'], // 功能布局
+                jump: function(obj, first){
+                    if(searchParam.pageSize === obj.limit){
+                        searchParam.pageNum = obj.curr;
+
+                    }else {
+                        searchParam.pageNum = 1;
+                    }
+                    searchParam.pageSize = obj.limit;
+                    if(!first){
+                        CoreUtil.sendAjax("user/list",JSON.stringify(searchParam),function (res){
+                            renderTable(res.data.userList)
+                            renderLayPage(res.data.count)
+                        },"POST",true,function (res){
+                            layer.msg(res.msg)
+                        })
+                    }
+                }
+            });
+        }
+
+
+        CoreUtil.sendAjax("user/list",JSON.stringify(searchParam),function (res){
+            renderTable(res.data.userList)
+            renderLayPage(res.data.count)
+        },"POST",true,function (res){
+            layer.msg(res.msg)
         })
 
 

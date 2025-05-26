@@ -1,18 +1,18 @@
-package com.wzh.study.service.menu;
+package com.wzh.study.service.impl;
 
 import com.wzh.study.code.ResponseCode;
 import com.wzh.study.entity.SysPermission;
 import com.wzh.study.exception.BusinessException;
-import com.wzh.study.mapper.SysPermissionMapper;
-import com.wzh.study.mapper.SysRolePermissionMapper;
-import com.wzh.study.mapper.SysUserRoleMapper;
+import com.wzh.study.service.MenuService;
+import com.wzh.study.service.PermissionService;
+import com.wzh.study.service.RolePermissionService;
+import com.wzh.study.service.UserRoleService;
 import com.wzh.study.util.TokenUtil;
 import com.wzh.study.vo.respVO.user.MenuResoVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
 import java.util.ArrayList;
@@ -25,15 +25,15 @@ public class MenuServiceImpl implements MenuService {
 
 
     @Autowired
-    private SysUserRoleMapper sysUserRoleMapper;
+    private UserRoleService userRoleService;
 
 
     @Autowired
-    private SysRolePermissionMapper sysRolepermissonMapper;
+    private RolePermissionService rolePermissionService;
 
 
     @Autowired
-    private SysPermissionMapper sysPermissionMapper;
+    private PermissionService permissionService;
 
     @Override
     public MenuResoVO getMenu() {
@@ -46,9 +46,9 @@ public class MenuServiceImpl implements MenuService {
             throw new BusinessException(ResponseCode.NO_TOKEN);
         }
         String userId = TokenUtil.getUserId(accessToken);
-        String roleId = sysUserRoleMapper.getRoleId(userId);
-        List<String> permissionIds = sysRolepermissonMapper.getPermissionIds(roleId);
-        List<SysPermission> permissions = sysPermissionMapper.getPermissions(permissionIds);
+        String roleId = userRoleService.getRoleId(userId);
+        List<String> permissionIds = rolePermissionService.getPermissionIds(roleId);
+        List<SysPermission> permissions = permissionService.getPermissions(permissionIds);
         MenuResoVO menuResoVO = new MenuResoVO();
         menuResoVO.setId("0");
         menuResoVO.setName("根目录");

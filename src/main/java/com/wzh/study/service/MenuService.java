@@ -1,4 +1,4 @@
-package com.wzh.study.service.menu;
+package com.wzh.study.service;
 
 
 import com.wzh.study.vo.respVO.user.MenuResoVO;

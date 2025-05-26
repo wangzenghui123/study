@@ -1,23 +1,32 @@
 package com.wzh.study.util;
 
+import com.wzh.study.service.PermissionService;
+import com.wzh.study.service.RolePermissionService;
+import com.wzh.study.service.UserRoleService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 @Component
 @Data
 public class TokenUtil implements InitializingBean {
+
+    @Autowired
+    private UserRoleService userRoleService;
+
+    @Autowired
+    private RolePermissionService rolePermissionService;
+
+    @Autowired
+    private PermissionService permissionService;
 
     @Value("${jwt.signKey}")
     private String signKey;

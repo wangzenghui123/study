@@ -15,7 +15,7 @@ public enum ResponseCode {
 
     REFRESH_TOKEN_EXPIRED(4000002,"令牌失效，请重新登录"),
 
-    NO_AUTHORITY(4000003,"您没有权限"),
+    NO_AUTHORITY(4000003,"您没有权限，请联系管理员"),
 
     NO_TOKEN(4000004,"未携带令牌，请重新登录"),
 

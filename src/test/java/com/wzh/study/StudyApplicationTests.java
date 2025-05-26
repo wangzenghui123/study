@@ -9,6 +9,7 @@ import com.wzh.study.mapper.SysUserRoleMapper;
 import com.wzh.study.redis.RedisService;
 import com.wzh.study.util.PasswordUtil;
 import com.wzh.study.util.TokenUtil;
+import com.wzh.study.vo.reqVO.user.UserListReqVO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import java.time.Duration;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -83,6 +85,17 @@ class StudyApplicationTests {
         for (SysPermission permission : sysPermissionMapper.getPermissions(permissionIds)) {
             System.out.println(permission.toString());
         }
+
+    }
+    @Test
+    void contextLoads4() throws InterruptedException {
+        UserListReqVO vo = new UserListReqVO();
+        vo.setUsername("wzh1");
+        vo.setStartTime(new Date());
+
+        List<SysUser> list = sysUserMapper.queryPageUserList(vo);
+
+        System.out.println(list);
 
     }
 

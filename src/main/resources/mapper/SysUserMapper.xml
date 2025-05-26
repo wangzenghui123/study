@@ -9,4 +9,24 @@
         where username = #{username} and deleted = 0
     </select>
 
+    <select id="queryPageUserList" resultType="com.wzh.study.entity.SysUser">
+        select * from sysuser
+        where deleted = 0
+        <if test="username != null and '' != username">
+            and username = #{username}
+        </if>
+        <if test="userId != null and '' != userId">
+            and userId = #{userId}
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+
+        <if test="startTime!=null">
+            and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') <![CDATA[ >= ]]>DATE_FORMAT(#{startTime},'%Y-%m-%d %H:%i:%s')
+        </if>
+
+
+    </select>
+
 </mapper>
