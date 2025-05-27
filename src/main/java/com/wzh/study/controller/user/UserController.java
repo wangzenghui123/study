@@ -59,7 +59,7 @@ public class UserController {
     @PostMapping(value = "/user/list",produces ={MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     @RequiresPermissions("sys:user:query")
-    public DataResult<Object> userList(@RequestBody UserListReqVO userListReqVO) throws JsonProcessingException {
+    public DataResult<Object> userList(@RequestBody UserListReqVO userListReqVO) {
 
         DataResult<Object> dataResult = new DataResult<>(ResponseCode.SUCCESS);
         dataResult.setData(userService.queryPageUserList(userListReqVO));
