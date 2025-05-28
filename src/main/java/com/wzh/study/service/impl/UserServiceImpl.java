@@ -12,10 +12,10 @@ import com.wzh.study.service.*;
 import com.wzh.study.util.DataResult;
 import com.wzh.study.util.PasswordUtil;
 import com.wzh.study.util.TokenUtil;
-import com.wzh.study.vo.reqVO.user.UserListReqVO;
-import com.wzh.study.vo.reqVO.user.UserLoginReqVO;
-import com.wzh.study.vo.respVO.user.UserListRespVO;
-import com.wzh.study.vo.respVO.user.UserLoginRespVO;
+import com.wzh.study.vo.reqVO.UserListReqVO;
+import com.wzh.study.vo.reqVO.UserLoginReqVO;
+import com.wzh.study.vo.respVO.UserListRespVO;
+import com.wzh.study.vo.respVO.UserLoginRespVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,7 +98,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserListRespVO queryPageUserList(UserListReqVO userListReqVO) {
-
 
         PageHelper.startPage(userListReqVO.getPageNum(),userListReqVO.getPageSize());
         List<SysUser> userList = sysUserMapper.queryPageUserList(userListReqVO);

@@ -1,12 +1,9 @@
 package com.wzh.study.service;
 
-import com.wzh.study.entity.SysUser;
 import com.wzh.study.util.DataResult;
-import com.wzh.study.vo.reqVO.user.UserListReqVO;
-import com.wzh.study.vo.reqVO.user.UserLoginReqVO;
-import com.wzh.study.vo.respVO.user.UserListRespVO;
-
-import java.util.List;
+import com.wzh.study.vo.reqVO.UserListReqVO;
+import com.wzh.study.vo.reqVO.UserLoginReqVO;
+import com.wzh.study.vo.respVO.UserListRespVO;
 
 public interface UserService {
 

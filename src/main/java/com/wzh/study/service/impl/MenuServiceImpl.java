@@ -8,7 +8,7 @@ import com.wzh.study.service.PermissionService;
 import com.wzh.study.service.RolePermissionService;
 import com.wzh.study.service.UserRoleService;
 import com.wzh.study.util.TokenUtil;
-import com.wzh.study.vo.respVO.user.MenuResoVO;
+import com.wzh.study.vo.respVO.MenuResoVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +71,6 @@ public class MenuServiceImpl implements MenuService {
         }
         Collections.sort(menuResoVOList, Comparator.comparingInt(MenuResoVO::getOrderNum));
         menuResoVO.setChildren((ArrayList<MenuResoVO>) menuResoVOList);
-        System.out.println(menuResoVO);
         return menuResoVO;
     }
 

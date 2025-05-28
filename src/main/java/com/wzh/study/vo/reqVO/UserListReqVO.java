@@ -1,4 +1,4 @@
-package com.wzh.study.vo.reqVO.user;
+package com.wzh.study.vo.reqVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -14,4 +14,8 @@
         </where>
     </select>
 
+    <select id="getAllPerm" resultType="com.wzh.study.entity.SysPermission">
+        select * from syspermission
+        where deleted = 0 and status = 1
+    </select>
 </mapper>

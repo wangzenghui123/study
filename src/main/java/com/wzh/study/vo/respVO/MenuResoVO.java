@@ -1,11 +1,10 @@
-package com.wzh.study.vo.respVO.user;
+package com.wzh.study.vo.respVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor

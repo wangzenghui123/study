@@ -1,4 +1,4 @@
-package com.wzh.study.vo.respVO.user;
+package com.wzh.study.vo.respVO;
 
 
 import lombok.*;
