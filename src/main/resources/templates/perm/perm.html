@@ -4,223 +4,216 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="/layui/css/layui.css" rel="stylesheet">
+
     <script src="/layui/layui.js"></script>
     <script src="/js/core.util.js"></script>
+    <link href="/layui/treetable-lay/treetable.css" rel="stylesheet">
+    <script src="/layui/treetable-lay/treetable.js"></script>
     <style>
-        #laypage {
+        #laypage{
             margin-left: 15px;
         }
     </style>
 
 </head>
 <body>
-<table class="layui-hide" id="ID-treeTable-demo"></table>
-<div id="laypage"></div>
-<script type="text/html" id="TPL-treeTable-demo">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getChecked">获取选中数据</button>
-    </div>
-</script>
-<script type="text/html" id="TPL-treeTable-demo-tools">
-    <div class="layui-btn-container">
-        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-        <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="addChild">新增</a>
-        <a class="layui-btn layui-btn-xs" lay-event="more">更多 <i class="layui-icon layui-icon-down"></i></a>
-    </div>
-</script>
+    <table class="layui-hide" id="ID-treetable-demo" ></table>
+    <div id="laypage"></div>
+    <script type="text/html" id="TPL-treetable-demo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="getChecked">获取选中数据</button>
+        </div>
+    </script>
+    <script type="text/html" id="TPL-treetable-demo-tools">
+        <div class="layui-btn-container">
+            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+            <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="addChild">新增</a>
+            <a class="layui-btn layui-btn-xs" lay-event="more">更多 <i class="layui-icon layui-icon-down"></i></a>
+        </div>
+    </script>
 </body>
+
 <script>
-    layui.use(function () {
-        var treeTable = layui.treeTable;
+    layui.config({
+        base: '/layui/'
+    }).extend({
+        treetable: 'treetable-lay/treetable'
+    }).use(function(){
+        var table = layui.table;
+        var treetable = layui.treetables;
         var layer = layui.layer;
         var dropdown = layui.dropdown;
         var laypage = layui.laypage;
-        var searchParam = {
-            pageNum: 1,
-            pageSize: 50,
+        var element = layui.element;
+        var searchParam={
+            pageNum:1,
+            pageSize:50,
         }
 
-        var inst = treeTable.render({
-            elem: '#ID-treeTable-demo', // 此处为静态模拟数据，实际使用时需换成真实接口
-            maxHeight: 'full-90',
-            toolbar: '#TPL-treeTable-demo',
-            cols: [
-                [
-                    {type: 'checkbox', fixed: 'left'},
-                    {field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left'},
-                    {field: 'name', title: '用户名', width: 180, fixed: 'left'}
-                    // {field: 'sex', title: '性别', width: 80, sort: true},
-                    // {field: 'experience', title: '积分', width: 90, sort: true},
-                    // {field: 'city', title: '城市', width: 100},
-                    // {fixed: "right", title: "操作", width: 190, align: "center", toolbar: "#TPL-treeTable-demo-tools"}
+
+
+        // var renderLayPage = function (count){
+        //     laypage.render({
+        //         elem: 'laypage', // 元素 id
+        //         count:count,
+        //         limit:searchParam.pageSize,
+        //         limits:[50,100],
+        //         curr:searchParam.pageNum,
+        //         groups:5,
+        //         prev:'上一页',
+        //         next:'下一页',
+        //         layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'], // 功能布局
+        //         jump: function(obj, first){
+        //             if(searchParam.pageSize === obj.limit){
+        //                 searchParam.pageNum = obj.curr;
+        //             }else {
+        //                 searchParam.pageNum = 1;
+        //             }
+        //             searchParam.pageSize = obj.limit;
+        //             if(!first){
+        //                 CoreUtil.sendAjax("permission/list",JSON.stringify(searchParam),function (res){
+        //                     rendertreetable(res.data.permList)
+        //                     renderLayPage(res.data.count)
+        //                 },"POST",true,function (res){
+        //                     layer.msg(res.msg)
+        //                 })
+        //             }
+        //         }
+        //     });
+        // }
+
+        CoreUtil.sendAjax("/api/permission/list",JSON.stringify(searchParam),function (res) {
+            console.log(res)
+            treetable.render({
+                // 渲染表格
+                data: res.data.permList,
+                treeColIndex: 1, // 树形图标显示在第几列
+                treeSpid: 0, // 最上级的父级id
+                treeIdName: 'id', // id字段的名称
+                treePidName: 'pid', // pid字段的名称
+                treeDefaultClose: false, // 是否默认折叠
+                treeLinkage: false, // 父级展开时是否自动展开所有子级
+                elem: '#ID-treetable-demo', // 表格id
+                page: false, // 树形表格一般是没有分页的
+                toolbar: '#TPL-treetable-demo-tools',
+                cols: [
+                    [
+                        {type: 'numbers'},
+                        {field: 'name', title: '菜单名称'},
+                        {field: 'id', title: '请求方式'}
+                        // {
+                        //     field: 'type', title: '类型', templet: function(item){
+                        //         if(item.type === 1){
+                        //             return '  <a class="layui-btn layui-btn-xs" >目录</a>';
+                        //         }
+                        //         if(item.type === 2){
+                        //             return '<a class="layui-btn layui-btn-xs layui-btn-normal" >菜单</a>';
+                        //         }
+                        //         if(item.type === 3){
+                        //             return '<a class="layui-btn layui-btn-xs layui-btn-warm " >按钮</a>';
+                        //         }
+                        //     }
+                        // },
+                        // {field: 'pidName', title: '父级名称',templet:function (item) {
+                        //         if(item.pidName ===null || item.pidName=== undefined){
+                        //             return "默认顶级菜单";
+                        //         }else {
+                        //             return item.pidName;
+                        //         }
+                        //     }},
+                        // {field: 'orderNum', title: '排序'},
+                        // {field: 'perms', title: '资源标识'},
+                        // {field: 'code', title: '前后端分离按钮控制标识'},
+                        // {
+                        //     field: 'createTime', title: '创建时间', minWidth: 120 , templet: function (item) {
+                        //         return CoreUtil.formattime(item.createTime);
+                        //     }
+                        // },
+                        // {
+                        //     field: 'status', title: '状态',templet: function (item) {
+                        //         if(item.status === 1){
+                        //             return  '  <input type="checkbox" lay-skin="switch" lay-text="启用|禁用" checked disabled>';
+                        //         }
+                        //         if(item.status === 0){
+                        //             return  '  <input type="checkbox" lay-skin="switch" lay-text="启用|禁用" disabled>';
+                        //         }
+                        //     }
+                        // },
+                        // {title:'操作',width:180,toolbar:'#tool'}
+                    ]
                 ]
-            ]
-        });
-        var isHaveChild = function (permList, id) {
-            let mark = false;
-            for (let i = 0; i < permList.length; i++) {
-                if (permList[i].pid == id) {
-                    mark = true;
-                    break;
-                }
-
-            }
-            return mark;
-        }
-
-
-        var getChildNodes = function (permList, id) {
-            let child = [];
-            for (let i = 0; i < permList.length; i++) {
-                if (permList[i].pid == id) {
-                    let childNode = {
-                        id: permList[i].id,
-                        name: permList[i].name
-                    }
-                    child.push(childNode)
-                    // getChildNodes(permList,permList[i].id)
-                }
-            }
-            return child
-
-        }
-        var parentIndex = 0
-        var renderTreeTable = function (permList) {
-            treeTable.addNodes('ID-treeTable-demo', {
-                index: -1,
-                data: {
-                    id: 0,
-                    name: '根目录'
-                }
             });
-            for (let i = 0; i < permList.length; i++) {
+            element.render()
+            table.render()
 
-                if (permList[i].pid == 0) {
-                    let isHave = isHaveChild(permList, permList[i].id)
-                    if (!isHave) {
-                        parentIndex++;
-                        treeTable.addNodes('ID-treeTable-demo', {
-                            parentIndex: parentIndex,
-                            index: -1,
-                            isParent: false
-                        });
-                    } else {
-                        parentIndex++;
-                        treeTable.addNodes('ID-treeTable-demo', {
-                            parentIndex: parentIndex,
-                            index: -1,
-                            isParent: true,
-                            data: {
-                                id: permList[i].id,
-                                name: permList[i].name
-                            }
-                        });
-                    }
+    },"POST",true,function (res){
+        layer.msg(res.msg)
+    })
 
-                }
-            }
-        }
-        var renderLayPage = function (count) {
-            laypage.render({
-                elem: 'laypage', // 元素 id
-                count: count,
-                limit: searchParam.pageSize,
-                limits: [50, 100],
-                curr: searchParam.pageNum,
-                groups: 5,
-                prev: '上一页',
-                next: '下一页',
-                layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'], // 功能布局
-                jump: function (obj, first) {
-                    if (searchParam.pageSize === obj.limit) {
-                        searchParam.pageNum = obj.curr;
-                    } else {
-                        searchParam.pageNum = 1;
-                    }
-                    searchParam.pageSize = obj.limit;
-                    if (!first) {
-                        CoreUtil.sendAjax("permission/list", JSON.stringify(searchParam), function (res) {
-                            renderTreeTable(res.data.permList)
-                            renderLayPage(res.data.count)
-                        }, "POST", true, function (res) {
-                            layer.msg(res.msg)
-                        })
-                    }
-                }
-            });
-        }
-
-        CoreUtil.sendAjax("/api/permission/list", JSON.stringify(searchParam), function (res) {
-            renderTreeTable(res.data.permList)
-            renderLayPage(res.data.count)
-        }, "POST", true, function (res) {
-            layer.msg(res.msg)
-        })
-
-        // 表头工具栏工具事件
-        treeTable.on("toolbar(ID-treeTable-demo)", function (obj) {
-            var config = obj.config;
-            var tableId = config.id;
-            var status = treeTable.checkStatus(tableId);
-            // 获取选中行
-            if (obj.event === "getChecked") {
-                if (!status.data.length) return layer.msg('无选中数据');
-                console.log(status);
-                layer.alert("当前数据选中已经输出到控制台，<br>您可按 F12 从控制台中查看结果。");
-            }
-        });
-        // 单元格工具事件
-        treeTable.on('tool(' + inst.config.id + ')', function (obj) {
-            var layEvent = obj.event; // 获得 lay-event 对应的值
-            var trElem = obj.tr;
-            var trData = obj.data;
-            var tableId = obj.config.id;
-            if (layEvent === "detail") {
-                layer.msg("查看操作：" + trData.name);
-            } else if (layEvent === "addChild") {
-                var data = {id: Date.now(), name: "新节点"};
-                var newNode2 = treeTable.addNodes(tableId, {
-                    parentIndex: trData["LAY_DATA_INDEX"],
-                    index: -1,
-                    data: data
-                });
-            } else if (layEvent === "more") {
-                // 下拉菜单
-                dropdown.render({
-                    elem: this, // 触发事件的 DOM 对象
-                    show: true, // 外部事件触发即显示
-                    align: "right", // 右对齐弹出
-                    data: [
-                        {
-                            title: "修改积分",
-                            id: "edit"
-                        },
-                        {
-                            title: "删除",
-                            id: "del"
-                        }
-                    ],
-                    click: function (menudata) {
-                        if (menudata.id === "del") {
-                            layer.confirm("真的删除行么", function (index) {
-                                obj.del(); // 等效如下
-                                // treeTable.removeNode(tableId, trElem.attr('data-index'))
-                                layer.close(index);
-                            });
-                        } else if (menudata.id === "edit") {
-                            layer.prompt({
-                                value: trData.experience,
-                                title: "输入新的积分"
-                            }, function (value, index) {
-                                obj.update({experience: value}); // 等效如下
-                                // treeTable.updateNode(tableId, trElem.attr('data-index'), {experience: value});
-                                layer.close(index);
-                            });
-                        }
-                    }
-                });
-            }
-        });
+    //     // 表头工具栏工具事件
+    //     treetable.on("toolbar(ID-treetable-demo)", function (obj) {
+    //     var config = obj.config;
+    //     var tableId = config.id;
+    //     var status = treetable.checkStatus(tableId);
+    //     // 获取选中行
+    //     if (obj.event === "getChecked") {
+    //     if(!status.data.length) return layer.msg('无选中数据');
+    //     console.log(status);
+    //     layer.alert("当前数据选中已经输出到控制台，<br>您可按 F12 从控制台中查看结果。");
+    // }
+    // });
+    //     // 单元格工具事件
+    //     treetable.on('tool('+ inst.config.id +')', function (obj) {
+    //     var layEvent = obj.event; // 获得 lay-event 对应的值
+    //     var trElem = obj.tr;
+    //     var trData = obj.data;
+    //     var tableId = obj.config.id;
+    //     if (layEvent === "detail") {
+    //     layer.msg("查看操作：" + trData.name);
+    // } else if (layEvent === "addChild") {
+    //     var data = {id: Date.now(), name: "新节点"};
+    //     var newNode2 = treetable.addNodes(tableId, {
+    //     parentIndex: trData["LAY_DATA_INDEX"],
+    //     index: -1,
+    //     data: data
+    // });
+    // } else if (layEvent === "more") {
+    //     // 下拉菜单
+    //     dropdown.render({
+    //     elem: this, // 触发事件的 DOM 对象
+    //     show: true, // 外部事件触发即显示
+    //     align: "right", // 右对齐弹出
+    //     data: [
+    // {
+    //     title: "修改积分",
+    //     id: "edit"
+    // },
+    // {
+    //     title: "删除",
+    //     id: "del"
+    // }
+    //     ],
+    //     click: function (menudata) {
+    //     if (menudata.id === "del") {
+    //     layer.confirm("真的删除行么", function (index) {
+    //     obj.del(); // 等效如下
+    //     // treetable.removeNode(tableId, trElem.attr('data-index'))
+    //     layer.close(index);
+    // });
+    // } else if (menudata.id === "edit") {
+    //     layer.prompt({
+    //     value: trData.experience,
+    //     title: "输入新的积分"
+    // }, function (value, index) {
+    //     obj.update({experience: value}); // 等效如下
+    //     // treetable.updateNode(tableId, trElem.attr('data-index'), {experience: value});
+    //     layer.close(index);
+    // });
+    // }
+    // }
+    // });
+    // }
+    // });
     });
 </script>
 </script>

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,6 +34,7 @@ public class PermissionServiceImpl implements PermissionService {
         PageHelper.startPage(permListReqVO.getPageNum(),permListReqVO.getPageSize());
         List<SysPermission> permList = sysPermissionMapper.getAllPerm();
         PageInfo<SysPermission> pageInfo = new PageInfo<>(permList);
+        ArrayList<SysPermission> menuList = new ArrayList<>();
 
         PermListRespVO permListRespVO = new PermListRespVO();
         permListRespVO.setPermList(permList);
