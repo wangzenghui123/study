@@ -52,6 +52,7 @@ public class MenuServiceImpl implements MenuService {
         MenuResoVO menuResoVO = new MenuResoVO();
         menuResoVO.setId("0");
         menuResoVO.setName("根目录");
+        menuResoVO.isParent = true;
         List<MenuResoVO> menuResoVOList = new ArrayList<>();
         for (SysPermission permission : permissions) {
             if (permission.getPid().equals("0")) {
@@ -64,6 +65,9 @@ public class MenuServiceImpl implements MenuService {
                 child.setPerms(permission.getPerms());
                 child.setOrderNum(permission.getOrderNum());
                 child.setId(permission.getId());
+                if(getChildren(permission.getId(),permissions).size() == 0){
+                    child.isParent = false;
+                }
                 child.setChildren(getChildren(permission.getId(),permissions));
                 menuResoVOList.add(child);
 
@@ -87,6 +91,9 @@ public class MenuServiceImpl implements MenuService {
                 child.setPerms(permission.getPerms());
                 child.setOrderNum(permission.getOrderNum());
                 child.setId(permission.getId());
+                if(getChildren(permission.getId(),permissions).size() == 0){
+                    child.isParent = false;
+                }
                 child.setChildren(getChildren(permission.getId(),permissions));
                 menuResoVOArrayList.add(child);
             }
