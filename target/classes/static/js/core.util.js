@@ -32,6 +32,10 @@ var CoreUtil = (function () {
                         setTimeout(function() {
                             top.window.location.href="/api/user/login"
                         }, 3000); // 3000毫秒，即3秒
+                    }else if(res.code ==0){
+                        if(ft!=null&&ft!=undefined){
+                            ft(res);
+                        }
                     }
                     else if(res.code==4000001){//根据后端提示刷新token
                         /*记录要重复刷新的参数*/
