@@ -12,9 +12,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class SysPermission implements Serializable {
 
-    private String id;
+    private Integer id;
 
-    private String code;
+    private Integer code;
 
     private String name;
 
@@ -24,7 +24,7 @@ public class SysPermission implements Serializable {
 
     private String method;
 
-    private String pid;
+    private Integer parentId;
 
     private Integer orderNum;
 
@@ -39,4 +39,6 @@ public class SysPermission implements Serializable {
     private Integer deleted;
 
     private String pidName;
+
+    private SysPermission[] children;
 }

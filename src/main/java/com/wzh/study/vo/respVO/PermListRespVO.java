@@ -13,8 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 public class PermListRespVO {
 
+    private Integer code = 0;
 
-    private Long count;
+    private Long count = 1000L;
 
-    private List<SysPermission> permList;
+    private List<SysPermission> data;
 }

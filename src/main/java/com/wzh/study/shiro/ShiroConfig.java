@@ -1,6 +1,7 @@
 package com.wzh.study.shiro;
 
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import jakarta.servlet.Filter;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
@@ -38,6 +39,7 @@ public class ShiroConfig {
         customRealm.setCredentialsMatcher(customHashedCredentialsMatcher());
         return customRealm;
     }
+
 
     @Bean("securityManager")
     public SecurityManager securityManager(){
@@ -119,5 +121,8 @@ public class ShiroConfig {
 //        return new LifecycleBeanPostProcessor();
 //    }
 
-
+    @Bean
+    public ShiroDialect shiroDialect() {
+        return new ShiroDialect();
+    }
 }

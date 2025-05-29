@@ -12,7 +12,8 @@ import java.util.ArrayList;
 public class MenuResoVO implements Comparable<MenuResoVO>{
 
     public boolean isParent = true;
-    private String id;
+
+    private Integer id;
 
     private String name;
 
@@ -20,15 +21,13 @@ public class MenuResoVO implements Comparable<MenuResoVO>{
 
     private String url;
 
-    private String pid;
+    private Integer pid;
 
     private Integer orderNum;
 
     private Integer type;
 
     private String pidName;
-
-
 
     private ArrayList<MenuResoVO> children;
 

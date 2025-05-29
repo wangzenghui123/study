@@ -10,5 +10,5 @@ public interface PermissionService {
 
     List<SysPermission> getPermissions(List<String> permissionIds);
 
-    PermListRespVO getAllPerm(PermListReqVO permListReqVO);
+    PermListRespVO getAllPerm();
 }

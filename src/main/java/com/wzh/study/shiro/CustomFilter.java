@@ -25,6 +25,7 @@ public class CustomFilter extends AccessControlFilter {
     //当isAccessAllowed方法返回false时，此方法被调用。在这里可以实现访问被拒绝时的处理
     @Override
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
+
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 //        String token="";
 //        if (!httpServletRequest.getMethod().equals("OPTIONS")) {
