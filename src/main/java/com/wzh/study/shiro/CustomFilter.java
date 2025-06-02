@@ -8,6 +8,7 @@ import com.wzh.study.util.TokenUtil;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.thymeleaf.util.StringUtils;
 import java.io.IOException;
@@ -50,14 +51,6 @@ public class CustomFilter extends AccessControlFilter {
         }
         CustomUsernamePasswordToken customUsernamePasswordToken = new CustomUsernamePasswordToken(accessToken,refreshToken);
         getSubject(servletRequest,servletResponse).login(customUsernamePasswordToken);
-//        servletResponse.setContentType("application/json");
-//        servletResponse.setCharacterEncoding("UTF-8");
-//        PrintWriter writer = servletResponse.getWriter();
-//        DataResult dataResult = new DataResult<>(ResponseCode.NO_TOKEN);
-//        String jsonString = JSON.toJSONString(dataResult);
-//        System.out.println(jsonString);
-//        writer.print(jsonString);
-//        writer.close();
         return true;
     }
     public void resonseJson(ServletResponse servletResponse,ResponseCode responseCode) throws IOException {

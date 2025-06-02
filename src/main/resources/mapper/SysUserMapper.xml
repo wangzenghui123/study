@@ -25,8 +25,30 @@
         <if test="startTime!=null">
             and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') <![CDATA[ >= ]]>DATE_FORMAT(#{startTime},'%Y-%m-%d %H:%i:%s')
         </if>
-
-
     </select>
+
+    <update id="updateUser">
+        UPDATE sysuser
+        <set>
+            <if test="username != null">username = #{username},</if>
+            <if test="salt != null">salt = #{salt},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="realName != null">real_name = #{realName},</if>
+            <if test="nickName != null">nick_name = #{nickName},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="deleted != null">deleted = #{deleted},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createWhere != null">create_where = #{createWhere},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime}</if>
+        </set>
+        WHERE id = #{id}
+    </update>
 
 </mapper>

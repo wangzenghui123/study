@@ -55,10 +55,10 @@ public class MenuServiceImpl implements MenuService {
         menuResoVO.isParent = true;
         List<MenuResoVO> menuResoVOList = new ArrayList<>();
         for (SysPermission permission : permissions) {
-            if (permission.getParentId() == 0) {
+            if (permission.getPid() == 0) {
                 MenuResoVO child = new MenuResoVO();
                 child.setPidName(permission.getPidName());
-                child.setPid(permission.getParentId());
+                child.setPid(permission.getPid());
                 child.setType(permission.getType());
                 child.setUrl(permission.getUrl());
                 child.setName(permission.getName());
@@ -81,10 +81,10 @@ public class MenuServiceImpl implements MenuService {
     public ArrayList<MenuResoVO> getChildren(Integer id,List<SysPermission> permissions){
         ArrayList<MenuResoVO> menuResoVOArrayList = new ArrayList<>();
         for (SysPermission permission : permissions) {
-            if(permission.getParentId() == id){
+            if(permission.getPid() == id){
                 MenuResoVO child = new MenuResoVO();
                 child.setPidName(permission.getPidName());
-                child.setPid(permission.getParentId());
+                child.setPid(permission.getPid());
                 child.setType(permission.getType());
                 child.setUrl(permission.getUrl());
                 child.setName(permission.getName());

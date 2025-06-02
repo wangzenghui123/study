@@ -1,16 +1,158 @@
 <!DOCTYPE html>
-<html>
+<!--<html xmlns:shiro="http://www.github.com/theborakompanioni/thymeleaf-extras-shiro">-->
+<html lang="en" xml:th="http://www.thymeleaf.org" xmlns:shiro="https://www.pollix.at/thymeleaf/shiro">
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="https://www.pollix.at/thymeleaf/shiro">-->
 <head>
-    <link href="/layui/css/layui.css" rel="stylesheet">
-    <script src="/layui/layui.js"></script>
-    <script src="/js/core.util.js"></script>
+    <link th:href="@{/layui/css/layui.css}" rel="stylesheet">
+    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/js/core.util.js}"></script>
+    <style>
+        form button.layui-btn {
+            position: relative;
+            left: 40%;
+        }
+        form {
+            position: absolute;
+            /*top: 50%;*/
+            /*left: %;*/
+            transform: translate(10%,5%); /* 将元素自身移动自身宽高的一半 */
+        }
+    </style>
+
 </head>
 <body>
 
-<div style="padding: 3px;">
+<!--隐藏编辑模版-->
+<form class="layui-form" hidden id="editForm" action="" >
+        <input type="text" name="id" hidden>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">盐值</label>
+                <div class="layui-input-inline layui-input-wrap">
+                    <input type="text" name="salt" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-inline layui-input-wrap">
+                    <input type="text" name="password" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">手机号</label>
+                <div class="layui-input-inline layui-input-wrap">
+                    <input type="text" name="phone" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">部门ID</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="deptId" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">真实姓名</label>
+                <div class="layui-input-inline layui-input-wrap">
+                    <input type="text" name="realName" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">昵称</label>
+                <div class="layui-input-inline layui-input-wrap">
+                    <input type="text" name="nickName" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-inline layui-input-wrap">
+                    <input type="text" name="email" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="status" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-inline layui-input-wrap">
+                    <input type="text" name="sex" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">是否删除</label>
+                <div class="layui-input-inline layui-input-wrap">
+                    <input type="text" name="deleted" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">创建ID</label>
+                <div class="layui-input-inline layui-input-wrap">
+                    <input type="text" name="createId" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">更新ID</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="updateId" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">创建地点</label>
+                <div class="layui-input-inline layui-input-wrap">
+                    <input type="text" name="createWhere" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">创建时间</label>
+                <div class="layui-input-inline layui-input-wrap">
+                    <input type="text" name="createTime"  class="layui-input demo-table-search-date">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">更新时间</label>
+                <div class="layui-input-inline layui-input-wrap">
+                    <input type="text" name="updateTime" class="layui-input demo-table-search-date">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">部门名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="deptName" class="layui-input">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="updateUser">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+
+<div  id="conentTable">
     <table class="layui-hide" id="test" lay-filter="test"></table>
     <div id="laypage"></div>
 </div>
+
+
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
@@ -31,19 +173,24 @@
 </script>
 <script type="text/html" id="toolDemo">
     <div class="layui-clear-space">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-xs" lay-event="more">
+
+            <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="sys:user:edit">编辑</a>
+        <a class="layui-btn layui-btn-xs" lay-event="more" shiro:hasPermission="sys:user:edit">
             更多
             <i class="layui-icon layui-icon-down"></i>
         </a>
     </div>
 </script>
-
 <script>
-    layui.use(['table', 'dropdown','laypage'], function () {
+    layui.use(['table', 'dropdown','laypage','layer'], function () {
         var table = layui.table;
         var dropdown = layui.dropdown;
         var laypage = layui.laypage;
+        var $ = layui.jquery;
+        var element = layui.element;
+        var form = layui.form;
+        var layer = layui.layer;
+        var laydate = layui.laydate;
         var searchParam={
             pageNum:1,
             pageSize:20,
@@ -57,6 +204,7 @@
 
 
         var renderTable = function (data){
+            console.log(data)
             table.render({
                 elem: '#test',
                 data: data,
@@ -99,6 +247,18 @@
                             expandedWidth: 260
                         },
                         {field: 'deptId', width: 80, title: '部门编号'},
+                        {field: 'realName', width: 80, title: '部门编号'},
+                        {field: 'nickName', width: 80, title: '部门编号'},
+                        {field: 'email', width: 80, title: '部门编号'},
+                        {field: 'status', width: 80, title: '部门编号'},
+                        {field: 'sex', width: 80, title: '部门编号'},
+                        {field: 'deleted', width: 80, title: '部门编号'},
+                        {field: 'createId', width: 80, title: '部门编号'},
+                        {field: 'updateId', width: 80, title: '部门编号'},
+                        {field: 'createWhere', width: 80, title: '部门编号'},
+                        {field: 'createTime', width: 80, title: '部门编号'},
+                        {field: 'updateTime', width: 80, title: '部门编号'},
+                        {field: 'deptName', width: 80, title: '部门编号'},
                         {fixed: 'right', title:'操作', width: 134, minWidth: 125, templet: '#toolDemo'}
                     ]
                 ],
@@ -127,6 +287,7 @@
                                         title: '添加',
                                         type: 1,
                                         area: ['80%', '80%'],
+                                        offset: ['16px', '16px'],
                                         content: '<div style="padding: 16px;">自定义表单元素</div>'
                                     });
                                     break;
@@ -136,6 +297,7 @@
                                         title: '编辑',
                                         type: 1,
                                         area: ['80%', '80%'],
+
                                         content: '<div style="padding: 16px;">自定义表单元素</div>'
                                     });
                                     break;
@@ -303,7 +465,7 @@
             renderTable(res.data.userList)
             renderLayPage(res.data.count)
         },"POST",true,function (res){
-            layer.msg(res.msg)
+            layer.msg(res)
         })
 
 
@@ -341,14 +503,62 @@
             var data = obj.data; // 获得当前行数据
             // console.log(obj)
             if (obj.event === 'edit') {
-                layer.open({
-                    title: '编辑 - id:' + data.id,
+
+                let updateUserLayer = layer.open({
+                    title: '正在编辑用户: ' + data.username,
                     type: 1,
-                    area: ['80%', '80%'],
-                    content: '<div style="padding: 16px;">自定义表单元素</div>'
+                    area: ['90%', '90%'],
+                    offset: ['16px'],
+                    content:$("#editForm")
+                });
+                $('form input[name="id"]').val(data.id);
+                $('form input[name="username"]').val(data.username);
+                $('form input[name="salt"]').val(data.salt);
+                $('form input[name="password"]').val(data.password);
+                $('form input[name="phone"]').val(data.phone);
+                $('form input[name="deptId"]').val(data.deptId);
+                $('form input[name="realName"]').val(data.realName);
+                $('form input[name="nickName"]').val(data.nickName);
+                $('form input[name="email"]').val(data.email);
+                $('form input[name="status"]').val(data.status);
+                $('form input[name="sex"]').val(data.sex);
+                $('form input[name="deleted"]').val(data.deleted);
+                $('form input[name="createId"]').val(data.createId);
+                $('form input[name="updateId"]').val(data.updateId);
+                $('form input[name="createWhere"]').val(data.createWhere);
+                $('form input[name="createTime"]').val(data.createTime);
+                $('form input[name="updateTime"]').val(data.updateTime);
+                $('form input[name="deptName"]').val(data.deptName);
+                laydate.render({
+                    elem: $('form input[name="updateTime"]'),
+                    type: 'datetime',
+                    fullPanel: true // 2.8+
+                })
+                laydate.render({
+                    elem: $('form input[name="createTime"]'),
+                    type: 'datetime',
+                    fullPanel: true // 2.8+
+                })
+                form.on('submit(updateUser)', function(data){
+                    layer.close(updateUserLayer)
+                    let field = data.field; // 获取表单全部字段值
+                    CoreUtil.sendAjax("/api/user/updateUser",JSON.stringify(field),function (res) {
+                        layer.msg("数据更新成功")
+                        CoreUtil.sendAjax("user/list",JSON.stringify(searchParam),function (res){
+                            renderTable(res.data.userList)
+                            renderLayPage(res.data.count)
+                        },"POST",true,function (res){
+                            layer.msg(res.msg)
+                        })
+                    },"POST",true,function (res){
+                        layer.msg(res.msg)
+                    })
+                    //jQuery对象转为DOM对象后调用reset()
+                    $('form')[0].reset()
+                    console.log($('form').first().serializeArray());
+                    return false; // 阻止默认 form 跳转
                 });
             } else if (obj.event === 'more') {
-                // 更多 - 下拉菜单
                 dropdown.render({
                     elem: this, // 触发事件的 DOM 对象
                     show: true, // 外部事件触发即显示

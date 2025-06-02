@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="https://www.github.com/theborakompanioni/thymeleaf-extras-shiro">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -18,26 +18,24 @@
 
     </table>
     <div id="laypage"></div>
-    <script type="text/html" id="TPL-treeTable-demo">
-        <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm" lay-event="getChecked">获取选中数据</button>
-        </div>
-    </script>
-    <script type="text/html" id="TPL-treeTable-demo-tools">
-        <div class="layui-btn-container">
 
-            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-
-            <a class="layui-btn layui-btn-xs" lay-event="more">更多 <i class="layui-icon layui-icon-down"></i></a>
-
-            <shiro:hasPermission name="dddd">
-           <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="addChild">新增</a>
-           </shiro:hasPermission>
-
-
-        </div>
-    </script>
 </body>
+<script type="text/html" id="TPL-treeTable-demo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getChecked">获取选中数据</button>
+    </div>
+</script>
+<script type="text/html" id="TPL-treeTable-demo-tools">
+    <div class="layui-btn-container">
+
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail" shiro:hasPermission="sys:user:edit">查看</a>
+
+        <a class="layui-btn layui-btn-xs" lay-event="more">更多 <i class="layui-icon layui-icon-down"></i></a>
+
+        <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="addChild">新增</a>
+
+    </div>
+</script>
 <script>
     layui.use(function(){
         var treeTable = layui.treeTable;
@@ -51,7 +49,7 @@
 
         var renderTreeTable = function (res) {
             treeTable.render({
-                elem: '#ID-treeTable-demo', // 此处为静态模拟数据，实际使用时需换成真实接口
+                elem: '#ID-treeTable-demo',
                 maxHeight: 'full-90',
                 data:res.data.data,
                 toolbar: '#TPL-treeTable-demo',

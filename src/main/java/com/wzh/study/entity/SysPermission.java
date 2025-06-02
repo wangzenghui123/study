@@ -24,7 +24,7 @@ public class SysPermission implements Serializable {
 
     private String method;
 
-    private Integer parentId;
+    private Integer pid;
 
     private Integer orderNum;
 

@@ -1,6 +1,7 @@
 package com.wzh.study.controller.user;
 
 import com.wzh.study.code.ResponseCode;
+import com.wzh.study.entity.SysUser;
 import com.wzh.study.service.UserService;
 import com.wzh.study.util.DataResult;
 import com.wzh.study.vo.reqVO.UserListReqVO;
@@ -23,7 +24,7 @@ public class UserController {
 
     @GetMapping("/user/login")
     public String login(){
-        return "user/login";
+        return "/user/login";
     }
 
     @GetMapping("/user")
@@ -62,6 +63,14 @@ public class UserController {
         dataResult.setData(userService.queryPageUserList(userListReqVO));
         return dataResult;
 
+    }
+    @PostMapping(value = "/user/updateUser",produces ={MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    @RequiresPermissions("sys:user:edit")
+    public DataResult updateUser(@RequestBody SysUser sysUser){
+        ResponseCode responseCode = userService.updateUser(sysUser);
+        DataResult dataResult = new DataResult(responseCode);
+        return dataResult;
     }
 
 }

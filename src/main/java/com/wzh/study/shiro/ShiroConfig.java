@@ -1,6 +1,7 @@
 package com.wzh.study.shiro;
 
 
+
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import jakarta.servlet.Filter;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
@@ -16,8 +17,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+
 
 
 import java.util.LinkedHashMap;
@@ -49,11 +52,11 @@ public class ShiroConfig {
          * 关闭shiro自带的session，详情见文档
          * http://shiro.apache.org/session-management.html#SessionManagement-StatelessApplications%28Sessionless%29
          */
-        DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
-        DefaultSessionStorageEvaluator defaultSessionStorageEvaluator = new DefaultSessionStorageEvaluator();
-        defaultSessionStorageEvaluator.setSessionStorageEnabled(false);
-        subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);
-        defaultWebSecurityManager.setSubjectDAO(subjectDAO);
+//        DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
+//        DefaultSessionStorageEvaluator defaultSessionStorageEvaluator = new DefaultSessionStorageEvaluator();
+//        defaultSessionStorageEvaluator.setSessionStorageEnabled(false);
+//        subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);
+//        defaultWebSecurityManager.setSubjectDAO(subjectDAO);
         return defaultWebSecurityManager;
     }
 
@@ -110,19 +113,48 @@ public class ShiroConfig {
         return authorizationAttributeSourceAdvisor;
     }
 
+
+
     @Bean
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
+
+    @Bean
+    @DependsOn({"lifecycleBeanPostProcessor"})
+    @ConditionalOnMissingBean
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
         DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
         defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
         return defaultAdvisorAutoProxyCreator;
     }
-//    @Bean
-//    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-//        return new LifecycleBeanPostProcessor();
-//    }
 
-    @Bean
-    public ShiroDialect shiroDialect() {
+    @Bean(name = "shiroDialect")
+    public ShiroDialect getShiroDialect() {
         return new ShiroDialect();
     }
+
+
+
+//    @Bean
+//    public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver) {
+//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+//        templateEngine.setTemplateResolver(templateResolver);
+//        templateEngine.addDialect(new ShiroDialect()); // 添加Shiro方言支持
+//        return templateEngine;
+//    }
+//    @Bean
+//    public SpringTemplateEngine templateEngine(SpringResourceTemplateResolver templateResolver) {
+//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+//        templateEngine.setTemplateResolver(templateResolver);
+//        templateEngine.addDialect(getShiroDialect()); // 添加Shiro方言支持
+//        return templateEngine;
+//    }
+//
+//    @Bean
+//    public ThymeleafViewResolver viewResolver(SpringTemplateEngine templateEngine) {
+//        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+//        viewResolver.setTemplateEngine(templateEngine);
+//        return viewResolver;
+//    }
 }

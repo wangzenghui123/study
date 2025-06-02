@@ -109,4 +109,16 @@ public class UserServiceImpl implements UserService {
 
         return userListRespVO;
     }
+
+    @Override
+    public ResponseCode updateUser(SysUser sysUser) {
+
+        System.out.println(sysUser);
+        Integer result = sysUserMapper.updateUser(sysUser);
+        if (result == 1) return ResponseCode.SUCCESS;
+
+//            throw new BusinessException(ResponseCode.UPDATEDATAERROR);
+
+        return null;
+    }
 }

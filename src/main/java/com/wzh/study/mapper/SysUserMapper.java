@@ -12,6 +12,8 @@ public interface SysUserMapper {
     SysUser queryUserByUsername(String username);
 
     List<SysUser> queryPageUserList(UserListReqVO userListReqVO);
+
+    Integer updateUser(SysUser sysUser);
 }
 
 

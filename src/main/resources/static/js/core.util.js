@@ -32,10 +32,6 @@ var CoreUtil = (function () {
                         setTimeout(function() {
                             top.window.location.href="/api/user/login"
                         }, 3000); // 3000毫秒，即3秒
-                    }else if(res.code ==0){
-                        if(ft!=null&&ft!=undefined){
-                            ft(res);
-                        }
                     }
                     else if(res.code==4000001){//根据后端提示刷新token
                         /*记录要重复刷新的参数*/
@@ -54,11 +50,10 @@ var CoreUtil = (function () {
                                 /*刷新成功后继续重复请求*/
                                 CoreUtil.sendAjax(reUrl,reParams,reFt,reMethod,reHeaders,reNoAuthorityFt,reContentType,reAsync);
                             }else {
-                                layer.msg("凭证过期请重新登录");
                                 setTimeout(function() {
                                     top.window.location.href="/index/login"
                                 }, 2000);
-
+                                layer.msg("凭证过期请重新登录");
                             }
                         },"GET",true)
                     }
@@ -66,11 +61,13 @@ var CoreUtil = (function () {
                         if(ft!=null&&ft!=undefined){
                             ft(res);
                         }
-                    } else if(res.code==4000003){
+                    }
+                    else if(res.code==4000003){
                         if(ft!=null&&ft!=undefined){
                             noAuthorityFt(res);
                         }
-                    }else {
+                    }
+                    else {
                         layer.msg(res.msg)
                     }
 

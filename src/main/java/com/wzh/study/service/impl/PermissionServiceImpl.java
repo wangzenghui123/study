@@ -39,7 +39,7 @@ public class PermissionServiceImpl implements PermissionService {
         List<SysPermission> allPerm = sysPermissionMapper.getAllPerm();
         ArrayList<SysPermission> menuList = new ArrayList<>();
         for (SysPermission sysPermission : allPerm) {
-            if (sysPermission.getParentId() == 0) {
+            if (sysPermission.getPid() == 0) {
                 List<SysPermission> children = getChildren(sysPermission.getId(), allPerm);
                 SysPermission[] array = children.toArray(new SysPermission[children.size()]);
                 sysPermission.setChildren(array);
@@ -71,7 +71,7 @@ public class PermissionServiceImpl implements PermissionService {
     public ArrayList<SysPermission> getChildren(Integer id, List<SysPermission> permissions) {
         ArrayList<SysPermission> menuResoVOArrayList = new ArrayList<>();
         for (SysPermission permission : permissions) {
-            if (permission.getParentId() == id) {
+            if (permission.getPid() == id) {
                 ArrayList<SysPermission> children = getChildren(permission.getId(), permissions);
                 SysPermission[] array = children.toArray(new SysPermission[children.size()]);
                 permission.setChildren(array);

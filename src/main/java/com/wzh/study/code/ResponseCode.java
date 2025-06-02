@@ -26,8 +26,10 @@ public enum ResponseCode {
 
     PASSWORD_ERROR(5000001,"密码错误"),
 
-    ACCOUNT_LOCKED(5000002,"账户锁定，请联系管理员");
+    ACCOUNT_LOCKED(5000002,"账户锁定，请联系管理员"),
 
+    //数据库相关
+    UPDATEDATAERROR(6000001,"更新数据失败");
 
 
 
