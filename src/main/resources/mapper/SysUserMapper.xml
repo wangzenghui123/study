@@ -51,4 +51,12 @@
         WHERE id = #{id}
     </update>
 
+    <update id="deleteUser">
+        update sysuser
+        <set>
+            <if test="id != null">deleted = 1</if>
+        </set>
+        where id = #{id}
+    </update>
+
 </mapper>

@@ -102,6 +102,7 @@ public class UserServiceImpl implements UserService {
         PageHelper.startPage(userListReqVO.getPageNum(),userListReqVO.getPageSize());
         List<SysUser> userList = sysUserMapper.queryPageUserList(userListReqVO);
         PageInfo<SysUser> pageInfo = new PageInfo<>(userList);
+        System.out.println("length:"+userList.size());
 
         UserListRespVO userListRespVO = new UserListRespVO();
         userListRespVO.setUserList(userList);
@@ -112,13 +113,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseCode updateUser(SysUser sysUser) {
-
-        System.out.println(sysUser);
-        Integer result = sysUserMapper.updateUser(sysUser);
-        if (result == 1) return ResponseCode.SUCCESS;
-
-//            throw new BusinessException(ResponseCode.UPDATEDATAERROR);
-
-        return null;
+        try{
+            Integer result = sysUserMapper.updateUser(sysUser);
+            if (result == 1) return ResponseCode.SUCCESS;
+        }catch (Exception e){
+            throw new BusinessException(ResponseCode.UPDATE_DATA_ERROR);
+        }
+        return ResponseCode.UPDATE_DATA_ERROR;
     }
+
+    @Override
+    public ResponseCode deleteUser(String id) {
+        try{
+            Integer result = sysUserMapper.deleteUser(id);
+            if(result == 1) return ResponseCode.SUCCESS;
+        }catch (Exception e){
+            throw new BusinessException(ResponseCode.DELETE_DATA_ERROR);
+        }
+        return ResponseCode.DELETE_DATA_ERROR;
+    }
+
+
 }

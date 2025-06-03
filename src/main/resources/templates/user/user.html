@@ -3,7 +3,7 @@
 <html lang="en" xml:th="http://www.thymeleaf.org" xmlns:shiro="https://www.pollix.at/thymeleaf/shiro">
 <!--<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="https://www.pollix.at/thymeleaf/shiro">-->
 <head>
-    <link th:href="@{/layui/css/layui.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
     <script th:src="@{/layui/layui.js}"></script>
     <script th:src="@{/js/core.util.js}"></script>
     <style>
@@ -11,178 +11,162 @@
             position: relative;
             left: 40%;
         }
+
         form {
             position: absolute;
             /*top: 50%;*/
             /*left: %;*/
-            transform: translate(10%,5%); /* 将元素自身移动自身宽高的一半 */
+            transform: translate(10%, 5%); /* 将元素自身移动自身宽高的一半 */
         }
     </style>
 
 </head>
 <body>
-
 <!--隐藏编辑模版-->
-<form class="layui-form" hidden id="editForm" action="" >
-        <input type="text" name="id" hidden>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">名称</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="username" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">盐值</label>
-                <div class="layui-input-inline layui-input-wrap">
-                    <input type="text" name="salt" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">密码</label>
-                <div class="layui-input-inline layui-input-wrap">
-                    <input type="text" name="password" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">手机号</label>
-                <div class="layui-input-inline layui-input-wrap">
-                    <input type="text" name="phone" class="layui-input">
-                </div>
+<form action="" class="layui-form" hidden id="editForm">
+    <input hidden name="id" type="text">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" name="username" type="text">
             </div>
         </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">部门ID</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="deptId" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">真实姓名</label>
-                <div class="layui-input-inline layui-input-wrap">
-                    <input type="text" name="realName" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">昵称</label>
-                <div class="layui-input-inline layui-input-wrap">
-                    <input type="text" name="nickName" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">邮箱</label>
-                <div class="layui-input-inline layui-input-wrap">
-                    <input type="text" name="email" class="layui-input">
-                </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">盐值</label>
+            <div class="layui-input-inline layui-input-wrap">
+                <input class="layui-input" name="salt" type="text">
             </div>
         </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">状态</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="status" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">性别</label>
-                <div class="layui-input-inline layui-input-wrap">
-                    <input type="text" name="sex" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">是否删除</label>
-                <div class="layui-input-inline layui-input-wrap">
-                    <input type="text" name="deleted" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">创建ID</label>
-                <div class="layui-input-inline layui-input-wrap">
-                    <input type="text" name="createId" class="layui-input">
-                </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-inline layui-input-wrap">
+                <input class="layui-input" name="password" type="text">
             </div>
         </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">更新ID</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="updateId" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">创建地点</label>
-                <div class="layui-input-inline layui-input-wrap">
-                    <input type="text" name="createWhere" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">创建时间</label>
-                <div class="layui-input-inline layui-input-wrap">
-                    <input type="text" name="createTime"  class="layui-input demo-table-search-date">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">更新时间</label>
-                <div class="layui-input-inline layui-input-wrap">
-                    <input type="text" name="updateTime" class="layui-input demo-table-search-date">
-                </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">手机号</label>
+            <div class="layui-input-inline layui-input-wrap">
+                <input class="layui-input" name="phone" type="text">
             </div>
         </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">部门名称</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="deptName" class="layui-input">
-                </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">部门ID</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" name="deptId" type="text">
             </div>
-
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">真实姓名</label>
+            <div class="layui-input-inline layui-input-wrap">
+                <input class="layui-input" name="realName" type="text">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">昵称</label>
+            <div class="layui-input-inline layui-input-wrap">
+                <input class="layui-input" name="nickName" type="text">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-inline layui-input-wrap">
+                <input class="layui-input" name="email" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" name="status" type="text">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-inline layui-input-wrap">
+                <input class="layui-input" name="sex" type="text">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">是否删除</label>
+            <div class="layui-input-inline layui-input-wrap">
+                <input class="layui-input" name="deleted" type="text">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">创建ID</label>
+            <div class="layui-input-inline layui-input-wrap">
+                <input class="layui-input" name="createId" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">更新ID</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" name="updateId" type="text">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">创建地点</label>
+            <div class="layui-input-inline layui-input-wrap">
+                <input class="layui-input" name="createWhere" type="text">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">创建时间</label>
+            <div class="layui-input-inline layui-input-wrap">
+                <input class="layui-input demo-table-search-date" name="createTime" type="text">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">更新时间</label>
+            <div class="layui-input-inline layui-input-wrap">
+                <input class="layui-input demo-table-search-date" name="updateTime" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">部门名称</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" name="deptName" type="text">
+            </div>
         </div>
 
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button type="submit" class="layui-btn" lay-submit lay-filter="updateUser">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-filter="updateUser" lay-submit type="submit">立即提交</button>
+            <button class="layui-btn layui-btn-primary" type="reset">重置</button>
         </div>
-    </form>
-
-<div  id="conentTable">
+    </div>
+</form>
+<div id="conentTable">
     <table class="layui-hide" id="test" lay-filter="test"></table>
     <div id="laypage"></div>
 </div>
+</body>
 
-
-<script type="text/html" id="toolbarDemo">
+<script id="toolbarDemo" type="text/html">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
         <button class="layui-btn layui-btn-sm" lay-event="getData">获取当前页数据</button>
-        <button class="layui-btn layui-btn-sm" id="dropdownButton">
-            下拉按钮
-            <i class="layui-icon layui-icon-down layui-font-12"></i>
-        </button>
-        <button class="layui-btn layui-btn-sm layui-bg-blue" id="reloadTest">
-            重载测试
-            <i class="layui-icon layui-icon-down layui-font-12"></i>
-        </button>
-        <button class="layui-btn layui-btn-sm layui-btn-primary" id="rowMode">
-            <span>{{= d.lineStyle ? '多行' : '单行' }}模式</span>
-            <i class="layui-icon layui-icon-down layui-font-12"></i>
-        </button>
+
     </div>
 </script>
-<script type="text/html" id="toolDemo">
+<script id="toolDemo" type="text/html">
     <div class="layui-clear-space">
-
-            <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="sys:user:edit">编辑</a>
-        <a class="layui-btn layui-btn-xs" lay-event="more" shiro:hasPermission="sys:user:edit">
-            更多
-            <i class="layui-icon layui-icon-down"></i>
-        </a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="sys:user:edit">编辑</a>
+        <a class="layui-btn layui-btn-xs" lay-event="delete" shiro:hasPermission="sys:user:delete">删除</a>
+        <a class="layui-btn layui-btn-xs" lay-event="export" shiro:hasPermission="sys:user:export">导出</a>
     </div>
 </script>
 <script>
-    layui.use(['table', 'dropdown','laypage','layer'], function () {
+    layui.use(['table', 'dropdown', 'laypage', 'layer'], function () {
         var table = layui.table;
         var dropdown = layui.dropdown;
         var laypage = layui.laypage;
@@ -191,19 +175,19 @@
         var form = layui.form;
         var layer = layui.layer;
         var laydate = layui.laydate;
-        var searchParam={
-            pageNum:1,
-            pageSize:20,
-            username:null,
-            userId:null,
-            status:null,
-            startTime:null,
-            endTime:null,
-            nickName:null
+        var searchParam = {
+            pageNum: 1,
+            pageSize: 20,
+            username: null,
+            userId: null,
+            status: null,
+            startTime: null,
+            endTime: null,
+            nickName: null
         }
 
 
-        var renderTable = function (data){
+        var renderTable = function (data) {
             console.log(data)
             table.render({
                 elem: '#test',
@@ -227,42 +211,65 @@
                 cols: [
                     [
                         {type: 'checkbox', fixed: 'left'},
-                        {field: 'id', fixed: 'left', width: 80, title: 'ID', sort: true, totalRow: '合计：'},
+                        {field: 'id', fixed: 'left', width: 80, title: 'ID' },
                         {field: 'username', width: 80, title: '用户'},
+                        {field: 'sex', width: 80, title: '性别',align:'center',templet:function (d) {
+                                if (d.sex ==1){
+                                    return '<div>男</div>'
+                                }else if(d.sex == 0){
+                                    return '<div>女</div>'
+                                }else {
+                                    return '<div>不详</div>'
+                                }
+                            } },
                         {
                             field: 'salt',
-                            title: '邮箱 <i class="layui-icon layui-icon-tips layui-font-14" lay-event="email-tips" title="该字段开启了编辑功能" style="margin-left: 5px;"></i>',
-                            fieldTitle: '盐',
-                            hide: 0,
-                            width: 150,
+                            title: '盐值 <i class="layui-icon layui-icon-tips layui-font-14" lay-event="email-tips" title="该字段开启了编辑功能" style="margin-left: 5px;"></i>',
+                            width: 300,
                             expandedMode: 'tips',
-                            edit: 'text'
+                            edit: 'text',
+                            align:'center'
                         },
-                        {field: 'password', width: 80, title: '密码'},
+                        {field: 'password',width: 300,title: '密码',align:'center'},
                         {
                             field: 'phone',
                             title: '手机号',
                             edit: 'textarea',
-                            minWidth: 260,
-                            expandedWidth: 260
+                            minWidth: 150,
+                            expandedWidth: 260,
+                            align:'center'
                         },
-                        {field: 'deptId', width: 80, title: '部门编号'},
-                        {field: 'realName', width: 80, title: '部门编号'},
-                        {field: 'nickName', width: 80, title: '部门编号'},
-                        {field: 'email', width: 80, title: '部门编号'},
-                        {field: 'status', width: 80, title: '部门编号'},
-                        {field: 'sex', width: 80, title: '部门编号'},
-                        {field: 'deleted', width: 80, title: '部门编号'},
-                        {field: 'createId', width: 80, title: '部门编号'},
-                        {field: 'updateId', width: 80, title: '部门编号'},
-                        {field: 'createWhere', width: 80, title: '部门编号'},
-                        {field: 'createTime', width: 80, title: '部门编号'},
-                        {field: 'updateTime', width: 80, title: '部门编号'},
-                        {field: 'deptName', width: 80, title: '部门编号'},
-                        {fixed: 'right', title:'操作', width: 134, minWidth: 125, templet: '#toolDemo'}
+                        {field: 'deptId', width: 100, title: '部门编号',align:'center'},
+                        {field: 'realName', width: 130, title: '真实姓名',align:'center'},
+                        {field: 'nickName', width: 130, title: '昵称',align:'center'},
+                        {field: 'email', width: 250, title: '邮箱',align:'center'},
+                        {field: 'status', width: 150, title: '状态',align:'center',templet:function (item) {
+                                if(item.status === 1){
+                                    return  '  <input type="checkbox" lay-skin="switch" lay-filter="userStatus" lay-text="正常|禁用" checked >';
+                                }
+                                if(item.status === 2){
+                                    return  '  <input type="checkbox" lay-skin="switch" lay-filter="userStatus"  lay-text="正常|禁用" >';
+                                }
+                            }},
+                        {field: 'deleted', width: 100, title: '是否删除',align:'center'},
+                        {field: 'createId', width: 100, title: '创建ID',align:'center'},
+                        {field: 'updateId', width: 100, title: '更新ID',align:'center'},
+                        {field: 'createWhere', width: 100, title: '创建地点',align:'center'},
+                        {field: 'createTime', width: 250, title: '创建时间',align:'center'},
+                        {field: 'updateTime', width: 250, title: '更新时间',align:'center'},
+                        {field: 'deptName', width: 100, title: '部门名称',align:'center'},
+                        {fixed: 'right', title: '操作', width: 150, minWidth: 125, templet: '#toolDemo'}
                     ]
                 ],
                 done: function () {
+                    let nextItem = $("input[lay-filter='userStatus']").next()
+                    $(nextItem).on('click', function(e){
+                        if($.trim($(nextItem).attr("class")) === $.trim("layui-unselect layui-form-switch")){
+
+                        }
+                    });
+
+
                     var id = this.id;
                     // 下拉按钮测试
                     dropdown.render({
@@ -429,30 +436,30 @@
             });
         }
 
-        var renderLayPage = function (count){
+        var renderLayPage = function (count) {
             laypage.render({
                 elem: 'laypage', // 元素 id
-                count:count,
-                limit:searchParam.pageSize,
-                limits:[20,50,100],
-                curr:searchParam.pageNum,
-                groups:5,
-                prev:'上一页',
-                next:'下一页',
+                count: count,
+                limit: searchParam.pageSize,
+                limits: [20, 50, 100],
+                curr: searchParam.pageNum,
+                groups: 5,
+                prev: '上一页',
+                next: '下一页',
                 layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'], // 功能布局
-                jump: function(obj, first){
-                    if(searchParam.pageSize === obj.limit){
+                jump: function (obj, first) {
+                    if (searchParam.pageSize === obj.limit) {
                         searchParam.pageNum = obj.curr;
 
-                    }else {
+                    } else {
                         searchParam.pageNum = 1;
                     }
                     searchParam.pageSize = obj.limit;
-                    if(!first){
-                        CoreUtil.sendAjax("user/list",JSON.stringify(searchParam),function (res){
+                    if (!first) {
+                        CoreUtil.sendAjax("user/list", JSON.stringify(searchParam), function (res) {
                             renderTable(res.data.userList)
                             renderLayPage(res.data.count)
-                        },"POST",true,function (res){
+                        }, "POST", true, function (res) {
                             layer.msg(res.msg)
                         })
                     }
@@ -461,10 +468,10 @@
         }
 
 
-        CoreUtil.sendAjax("user/list",JSON.stringify(searchParam),function (res){
+        CoreUtil.sendAjax("user/list", JSON.stringify(searchParam), function (res) {
             renderTable(res.data.userList)
             renderLayPage(res.data.count)
-        },"POST",true,function (res){
+        }, "POST", true, function (res) {
             layer.msg(res)
         })
 
@@ -485,31 +492,31 @@
                     layer.alert(layui.util.escape(JSON.stringify(getData)));
                     break;
             }
-            ;
+
         });
         // 表头自定义元素工具事件 --- 2.8.8+
         table.on('colTool(test)', function (obj) {
             var event = obj.event;
-            console.log(obj);
             if (event === 'email-tips') {
                 layer.alert(layui.util.escape(JSON.stringify(obj.col)), {
                     title: '当前列属性选项'
                 });
+            }else if (event === 'userStatus'){
+                console.log(obj);
             }
         });
 
         // 触发单元格工具事件
         table.on('tool(test)', function (obj) { // 双击 toolDouble
             var data = obj.data; // 获得当前行数据
-            // console.log(obj)
             if (obj.event === 'edit') {
-
                 let updateUserLayer = layer.open({
                     title: '正在编辑用户: ' + data.username,
                     type: 1,
                     area: ['90%', '90%'],
                     offset: ['16px'],
-                    content:$("#editForm")
+                    skin:'layui-layer-molv',
+                    content: $("#editForm")
                 });
                 $('form input[name="id"]').val(data.id);
                 $('form input[name="username"]').val(data.username);
@@ -539,18 +546,18 @@
                     type: 'datetime',
                     fullPanel: true // 2.8+
                 })
-                form.on('submit(updateUser)', function(data){
+                form.on('submit(updateUser)', function (data) {
                     layer.close(updateUserLayer)
                     let field = data.field; // 获取表单全部字段值
-                    CoreUtil.sendAjax("/api/user/updateUser",JSON.stringify(field),function (res) {
+                    CoreUtil.sendAjax("/api/user/updateUser", JSON.stringify(field), function (res) {
                         layer.msg("数据更新成功")
-                        CoreUtil.sendAjax("user/list",JSON.stringify(searchParam),function (res){
+                        CoreUtil.sendAjax("user/list", JSON.stringify(searchParam), function (res) {
                             renderTable(res.data.userList)
                             renderLayPage(res.data.count)
-                        },"POST",true,function (res){
+                        }, "POST", true, function (res) {
                             layer.msg(res.msg)
                         })
-                    },"POST",true,function (res){
+                    }, "POST", true, function (res) {
                         layer.msg(res.msg)
                     })
                     //jQuery对象转为DOM对象后调用reset()
@@ -558,31 +565,22 @@
                     console.log($('form').first().serializeArray());
                     return false; // 阻止默认 form 跳转
                 });
-            } else if (obj.event === 'more') {
-                dropdown.render({
-                    elem: this, // 触发事件的 DOM 对象
-                    show: true, // 外部事件触发即显示
-                    data: [{
-                        title: '查看',
-                        id: 'detail'
-                    }, {
-                        title: '删除',
-                        id: 'del'
-                    }],
-                    click: function (menudata) {
-                        if (menudata.id === 'detail') {
-                            layer.msg('查看操作，当前行 ID:' + data.id);
-                        } else if (menudata.id === 'del') {
-                            layer.confirm('真的删除行 [id: ' + data.id + '] 么', function (index) {
-                                obj.del(); // 删除对应行（tr）的DOM结构
-                                layer.close(index);
-                                // 向服务端发送删除指令
-                            });
-                        }
-                    },
-                    id: 'dropdown-table-tool',
-                    align: 'right', // 右对齐弹出
-                    style: 'box-shadow: 1px 1px 10px rgb(0 0 0 / 12%);' // 设置额外样式
+            } else if (obj.event === 'delete') {
+                var data = obj.data;
+                layer.confirm('确定删除用户'+data.username+'吗？', {icon: 3,skin:'layui-layer-molv',title:'删除操作'}, function(){
+                    CoreUtil.sendAjax("/api/user/delete?id="+data.id,null,function (res) {
+                        layer.msg('已删除', {icon: 1});
+                        CoreUtil.sendAjax("user/list", JSON.stringify(searchParam), function (res) {
+                            renderTable(res.data.userList)
+                            renderLayPage(res.data.count)
+                        }, "POST", true, function (res) {
+                            layer.msg(res.msg)
+                        })
+                    },"DELETE",true,function (res) {
+                        layer.msg(res.msg)
+                    })
+                }, function(){
+                    layer.msg('已取消');
                 });
             }
         });
@@ -633,35 +631,24 @@
             update[field] = value;
             obj.update(update);
         });
-    });
-</script>
-<script>
-    //JS
-    layui.use(['element', 'layer', 'util', 'table', 'dropdown'], function () {
-        var element = layui.element;
-        var layer = layui.layer;
-        var util = layui.util;
-        var $ = layui.$;
 
-        //头部事件
-        util.event('lay-header-event', {
-            menuLeft: function (othis) { // 左侧菜单事件
-                layer.msg('展开左侧菜单的操作', {icon: 0});
-            },
-            menuRight: function () {  // 右侧菜单事件
-                layer.open({
-                    type: 1,
-                    title: '更多',
-                    content: '<div style="padding: 15px;">处理右侧面板的操作</div>',
-                    area: ['260px', '100%'],
-                    offset: 'rt', // 右上角
-                    anim: 'slideLeft', // 从右侧抽屉滑出
-                    shadeClose: true,
-                    scrollbar: false
-                });
-            }
+        // 状态 - 开关操作
+        form.on('switch(demo-templet-status)', function(obj){
+            var id = this.value;
+            var name = this.name;
+            layer.tips(id + ' ' + name + ': '+ obj.elem.checked, obj.othis);
         });
     });
 </script>
-</body>
+<script type="text/html" id="TPL-demo-title">
+    <a href="/detail/{{= d.id }}" class="layui-table-link">
+        {{= d.title }}
+    </a>
+</script>
+
+<!--
+模板中的 `d` 不仅包含当前行数据，还包含特定字段，如：
+{{= d.LAY_INDEX }} {{= d.LAY_COL }} 等
+-->
+
 </html>

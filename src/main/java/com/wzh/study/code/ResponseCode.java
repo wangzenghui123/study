@@ -29,7 +29,9 @@ public enum ResponseCode {
     ACCOUNT_LOCKED(5000002,"账户锁定，请联系管理员"),
 
     //数据库相关
-    UPDATEDATAERROR(6000001,"更新数据失败");
+    UPDATE_DATA_ERROR(6000001,"更新数据失败"),
+
+    DELETE_DATA_ERROR(6000002,"删除数据失败");
 
 
 

@@ -16,4 +16,6 @@ public interface UserService {
 
     ResponseCode updateUser(SysUser sysUser);
 
+    ResponseCode deleteUser(String id);
+
 }

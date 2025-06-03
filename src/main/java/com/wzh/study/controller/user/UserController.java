@@ -72,5 +72,13 @@ public class UserController {
         DataResult dataResult = new DataResult(responseCode);
         return dataResult;
     }
+    @DeleteMapping(value = "/user/delete")
+    @ResponseBody
+    @RequiresPermissions("sys:user:delete")
+    public DataResult deleteUser(@RequestParam(value="id") String id){
+        ResponseCode responseCode = userService.deleteUser(id);
+        DataResult dataResult = new DataResult(responseCode);
+        return dataResult;
+    }
 
 }

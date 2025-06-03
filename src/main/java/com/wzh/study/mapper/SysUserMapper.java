@@ -14,6 +14,8 @@ public interface SysUserMapper {
     List<SysUser> queryPageUserList(UserListReqVO userListReqVO);
 
     Integer updateUser(SysUser sysUser);
+
+    Integer deleteUser(String id);
 }
 
 

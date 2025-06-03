@@ -99,6 +99,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/api/user","anon");
         filterChainDefinitionMap.put("/api/role","anon");
         filterChainDefinitionMap.put("/api/permission","anon");
+        filterChainDefinitionMap.put("/user_edit.html","anon");
         filterChainDefinitionMap.put("/**", "customFilter,authc"); // 使用自定义过滤器
 
         shiroFilterFactoryBean.setLoginUrl("/api/user/login");
